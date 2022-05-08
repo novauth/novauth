@@ -53,3 +53,7 @@ web-build/
 
 
 apps/authenticator-e2e/artifacts
+
+# Generated Docusaurus files
+.docusaurus/
+.cache-loader/

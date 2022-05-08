@@ -2,6 +2,7 @@
   "version": 2,
   "projects": {
     "authenticator": "apps/authenticator",
-    "authenticator-e2e": "apps/authenticator-e2e"
+    "authenticator-e2e": "apps/authenticator-e2e",
+    "docs": "docs"
   }
 }
