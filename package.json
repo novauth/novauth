@@ -59,7 +59,7 @@
     "expo-dev-client": "0.8.4",
     "expo-splash-screen": "0.14.2",
     "expo-status-bar": "1.2.0",
-    "expo-structured-headers": "2.1.1",
+    "expo-structured-headers": "2.2.1",
     "expo-updates": "~0.11.6",
     "prism-react-renderer": "^1.2.1",
     "react": "17.0.1",
