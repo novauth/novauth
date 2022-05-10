@@ -1,0 +1,11 @@
+[
+  {
+    "name": "status - waiting for feedback",
+    "color": "fbca04",
+    "description": "Waiting for additional feedback from people involved in the issue / pull request"
+  },
+  {
+    "name": "stale",
+    "color": "ededed"
+  }
+]

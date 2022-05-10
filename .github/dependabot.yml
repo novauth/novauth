@@ -1,0 +1,17 @@
+version: 2
+updates:
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'daily'
+    commit-message:
+      prefix: 'github-actions'
+    open-pull-requests-limit: 10
+  # sample config for npm
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'daily'
+    commit-message:
+      prefix: 'npm'
+    open-pull-requests-limit: 10
