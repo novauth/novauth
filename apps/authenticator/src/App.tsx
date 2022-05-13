@@ -1,17 +1,17 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
-import {
-  SafeAreaView,
-  Text,
-} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native'
+import RootStackNavigator from './navigation/RootStackNavigator'
+import Home from './screens/Home'
+
 
 const App = () => {
   return (
-    <>
-      <SafeAreaView>
-        <Text>NovAuth: Securing the Modern Web</Text>
-      </SafeAreaView>
-    </>
-  );
-};
+    <NavigationContainer>
+      <RootStackNavigator.Navigator>
+        <RootStackNavigator.Screen name='Home' component={Home} />
+      </RootStackNavigator.Navigator>
+    </NavigationContainer>
+  )
+}
 
-export default App;
+export default App
