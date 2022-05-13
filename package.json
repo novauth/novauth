@@ -60,7 +60,7 @@
     "@rneui/themed": "^4.0.0-rc.3",
     "clsx": "^1.1.1",
     "expo": "44.0.6",
-    "expo-dev-client": "0.8.4",
+    "expo-dev-client": "0.9.5",
     "expo-splash-screen": "0.14.2",
     "expo-status-bar": "1.2.0",
     "expo-structured-headers": "2.1.1",
