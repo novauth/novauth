@@ -3,6 +3,7 @@
   "projects": {
     "authenticator": "apps/authenticator",
     "authenticator-e2e": "apps/authenticator-e2e",
-    "docs": "docs"
+    "docs": "docs",
+    "react-native-fido2": "libs/react-native-fido2"
   }
 }
