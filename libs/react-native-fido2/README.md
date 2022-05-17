@@ -5,23 +5,27 @@ A FIDO2 API wrapper for React Native
 ## Installation
 
 ```sh
-npm install react-native-fido2
+npm install @novauth/react-native-fido2
+```
+
+or
+
+```sh
+yarn install @novauth/react-native-fido2
 ```
 
 ## Usage
 
-```js
-import { multiply } from "react-native-fido2";
-
-// ...
-
-const result = await multiply(3, 7);
-```
+TODO
 
 ## Contributing
 
-See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
+TODO
+
+## Acknowledgements
+
+Special thanks go to maintainers and contributors of [`react-native-fido`](https://github.com/Emad-salah/react-native-fido), which is the original basis of this library.
 
 ## License
 
-MIT
+[MIT](LICENSE)
