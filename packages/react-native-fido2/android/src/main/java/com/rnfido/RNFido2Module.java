@@ -7,7 +7,6 @@ import android.content.IntentSender;
 import android.util.Base64;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 
 import java.util.Arrays;
 import java.util.ArrayList;
@@ -54,6 +53,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 import org.json.JSONObject;
+
+import javax.annotation.Nonnull;
 
 public class RNFido2Module extends ReactContextBaseJavaModule {
 
@@ -169,7 +170,7 @@ public class RNFido2Module extends ReactContextBaseJavaModule {
     }
 
     @Override
-    @NonNull
+    @Nonnull
     public String getName() {
         return "RNFido2";
     }
