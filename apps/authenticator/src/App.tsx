@@ -4,6 +4,7 @@ import RootStackNavigator from './navigation/RootStackNavigator'
 import Home from './screens/Home'
 
 
+
 const App = () => {
   return (
     <NavigationContainer>

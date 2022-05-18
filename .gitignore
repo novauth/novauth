@@ -51,9 +51,9 @@ npm-debug.*
 *.orig.*
 web-build/
 
-
-apps/authenticator-e2e/artifacts
-
 # Generated Docusaurus files
 .docusaurus/
 .cache-loader/
+
+# Lerna
+lerna-debug.log

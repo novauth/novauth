@@ -1,0 +1,44 @@
+{
+  "name": "@novauth/react-native-fido2",
+  "version": "0.0.0",
+  "description": "A FIDO2 API wrapper for React Native",
+  "keywords": [
+    "react-native",
+    "fido2",
+    "android"
+  ],
+  "author": {
+    "name": "Matteo Agnoletto",
+    "email": "info@epmatt.com",
+    "url": "https://epmatt.com"
+  },
+  "homepage": "https://github.com/novauth/novauth/tree/main/packages/react-native-fido2#readme",
+  "license": "MIT",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/novauth/novauth.git",
+    "baseUrl": "https://github.com/novauth/novauth"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/novauth/novauth/issues"
+  },
+  "peerDependencies": {
+    "react": "^16.8.1",
+    "react-native": ">=0.59.0-rc.0 <1.0.x"
+  },
+  "devDependencies": {
+    "react": "^16.8.3",
+    "react-native": "^0.59.10"
+  }
+}
