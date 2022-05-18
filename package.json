@@ -11,6 +11,11 @@
     "url": "https://epmatt.com"
   },
   "private": true,
+  "workspaces": [
+    "packages/*",
+    "apps/*",
+    "docs"
+  ],
   "devDependencies": {
     "lerna": "^4.0.0"
   }
