@@ -1,0 +1,40 @@
+{
+  "name": "@novauth/sdk-node",
+  "version": "0.0.0",
+  "description": "NovAuth SDK for Node.js",
+  "type": "module",
+  "keywords": [
+    "node.js",
+    "authentication",
+    "server",
+    "security",
+    "fido2"
+  ],
+  "author": {
+    "name": "Matteo Agnoletto",
+    "email": "info@epmatt.com",
+    "url": "https://epmatt.com"
+  },
+  "homepage": "https://github.com/novauth/novauth/tree/main/packages/sdk-node#readme",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib/**/*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/novauth/novauth.git",
+    "baseUrl": "https://github.com/novauth/novauth"
+  },
+  "scripts": {
+    "build": "tsc --build",
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/novauth/novauth/issues"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.4"
+  }
+}
