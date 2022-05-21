@@ -1,5 +1,5 @@
 import Operation from '../Operation'
-import Pairing from '../Pairing'
+import Pairing from '../pairing/Pairing'
 
 interface PushAuthenticationOperation
   extends Operation<{

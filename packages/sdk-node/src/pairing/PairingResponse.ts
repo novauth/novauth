@@ -1,5 +1,5 @@
 import { AttestationResult } from 'fido2-lib'
-import { DeviceID } from '../Pairing'
+import { DeviceID } from './Pairing'
 import { OperationID } from '../Operation'
 
 interface PairingResponse {

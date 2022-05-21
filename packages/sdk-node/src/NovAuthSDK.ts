@@ -9,7 +9,7 @@ import PushAuthenticationResponse from './push-authentication/PushAuthentication
 import PushAuthenticationIntent from './push-authentication/PushAuthenticationIntent'
 import PairingOperation from './pairing/PairingOperation'
 import PushAuthenticationOperation from './push-authentication/PushAuthenticationOperation'
-import Pairing from './Pairing'
+import Pairing from './pairing/Pairing'
 import User from './User'
 
 interface NovAuthSDKOptions {
@@ -195,13 +195,14 @@ class NovAuthSDK {
       })
       const authnrData = authnResult.authnrData
       // return the update pairing data, to be persistently stored for future access
+      const { credential, ...pairingMerge } = operation.data.pairing
       return {
         credential: {
           id: operation.data.pairing.credential.id,
           counter: authnrData.get('signCount'),
           publicKey: operation.data.pairing.credential.publicKey,
         },
-        ...operation.data.pairing,
+        ...pairingMerge,
       }
     } catch (err) {
       throw 'The authentication request cannot be verified: ' + err
