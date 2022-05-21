@@ -1,10 +1,12 @@
-import { PublicKeyCredentialCreationOptions } from "fido2-lib"
+import { PublicKeyCredentialCreationOptions } from 'fido2-lib'
+import { OperationID } from '../Operation'
 
 type Version = '0.0.0'
 
 type NotificationProvider = 'novauth'
 
-interface PairingIntentData {
+interface PairingRequest {
+  operationId: OperationID
   version: Version
   notificationProvider: NotificationProvider
   origin: string
@@ -12,7 +14,8 @@ interface PairingIntentData {
   attestationRequest: PublicKeyCredentialCreationOptions
 }
 
-interface PairingIntentDataCompressed {
+interface PairingRequestCompressed {
+  i: OperationID
   v: Version
   n: NotificationProvider
   o: string
@@ -20,8 +23,9 @@ interface PairingIntentDataCompressed {
   a: PublicKeyCredentialCreationOptions
 }
 
-function compress(request: PairingIntentData): PairingIntentDataCompressed {
+function compress(request: PairingRequest): PairingRequestCompressed {
   return {
+    i: request.operationId,
     v: request.version,
     n: request.notificationProvider,
     o: request.origin,
@@ -30,8 +34,9 @@ function compress(request: PairingIntentData): PairingIntentDataCompressed {
   }
 }
 
-function decompress(request: PairingIntentDataCompressed): PairingIntentData {
+function decompress(request: PairingRequestCompressed): PairingRequest {
   return {
+    operationId: request.i,
     version: request.v,
     notificationProvider: request.n,
     origin: request.o,
@@ -40,5 +45,5 @@ function decompress(request: PairingIntentDataCompressed): PairingIntentData {
   }
 }
 
-export { PairingIntentData }
+export { PairingRequest }
 export default { compress, decompress }

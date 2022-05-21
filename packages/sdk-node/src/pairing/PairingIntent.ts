@@ -1,8 +1,8 @@
-type PairingIntentID = string
+import PairingOperation from './PairingOperation'
 
 interface PairingIntent {
-    id: PairingIntentID
-    qrCode: string,
+  operation: PairingOperation
+  qrCode: string
 }
 
-export {PairingIntent, PairingIntentID}
+export default PairingIntent
