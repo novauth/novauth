@@ -12,7 +12,7 @@ async function getUser(
 ): Promise<express.Response | undefined> {
   try {
     const reqUser: any = req.user
-    const user = await getUserfromService(reqUser.sub)
+    const user = await getUserfromService(req.params.email)
     if (user !== null) {
       return makeResponse(res, 200, '', user)
     }
@@ -30,7 +30,7 @@ async function putUser(
 ): Promise<express.Response | undefined> {
   try {
     const reqUser: any = req.user
-    const result = await putUserFromService(req.body.action, reqUser.sub, {
+    const result = await putUserFromService(req.body.action, req.params.email, {
       user: req.body.user,
       app: req.body.app,
     })
