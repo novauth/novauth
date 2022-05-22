@@ -15,6 +15,8 @@ interface App {
 }
 
 const schema = new Schema<App, Model<App, AppQueryHelpers>, any, any>({
+  id: { type: String, required: true },
+  token: { type: String, required: false },
   origin: { type: String, required: true },
 })
 
