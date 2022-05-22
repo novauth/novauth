@@ -1,0 +1,401 @@
+openapi: 3.0.3
+info:
+  version: 0.0.0
+  title: 'NovAuth API'
+  description: 'Specification for the NovAuth API'
+servers:
+  - url: https://api.novauth.com
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  requestBodies:
+    User:
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/UserCreation'
+  schemas:
+    responseBase:
+      type: object
+      required:
+        - status
+        - message
+        - data
+      properties:
+        status:
+          type: integer
+        message:
+          type: string
+        data:
+          type: object
+    responseErrorBase:
+      type: object
+      required:
+        - status
+        - message
+      properties:
+        status:
+          type: integer
+        message:
+          type: string
+    responseBase200:
+      allOf:
+        - $ref: '#/components/schemas/responseBase'
+        - type: object
+          required:
+            - status
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'OK'
+    responseBase201:
+      allOf:
+        - $ref: '#/components/schemas/responseBase'
+        - type: object
+          required:
+            - status
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: 'Created'
+    responseBase400:
+      allOf:
+        - $ref: '#/components/schemas/responseErrorBase'
+        - type: object
+          required:
+            - status
+          properties:
+            status:
+              type: integer
+              example: 400
+            message:
+              type: string
+              example: Bad Request
+    responseBase401:
+      allOf:
+        - $ref: '#/components/schemas/responseErrorBase'
+        - type: object
+          required:
+            - status
+          properties:
+            status:
+              type: integer
+              example: 401
+            message:
+              type: string
+              example: Unauthorized
+    responseBase403:
+      allOf:
+        - $ref: '#/components/schemas/responseErrorBase'
+        - type: object
+          required:
+            - status
+          properties:
+            status:
+              type: integer
+              example: 403
+            message:
+              type: string
+              example: Forbidden
+    responseBase404:
+      allOf:
+        - $ref: '#/components/schemas/responseErrorBase'
+        - type: object
+          required:
+            - status
+          properties:
+            status:
+              type: integer
+              example: 404
+            message:
+              type: string
+              example: Not Found
+    responseBase500:
+      allOf:
+        - $ref: '#/components/schemas/responseErrorBase'
+        - type: object
+          required:
+            - status
+          properties:
+            status:
+              type: integer
+              example: 500
+            message:
+              type: string
+              example: Internal Server Error
+    responseDataTokens:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - accessToken
+            - refreshToken
+          properties:
+            accessToken:
+              type: string
+            refreshToken:
+              type: string
+    responseDataUser:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/User'
+    UserCreation:
+      type: object
+      required:
+        - action
+        - user
+      properties:
+        action:
+          type: string
+          enum: ['create']
+        user:
+          type: object
+          required:
+            - email
+            - password
+          properties:
+            email:
+              type: string
+            password:
+              type: string
+    User:
+      type: object
+      required:
+        - email
+      properties:
+        email:
+          type: string
+  responses:
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/responseBase500'
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/responseBase400'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/responseBase401'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/responseBase403'
+    NotFound:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/responseBase404'
+tags:
+  - name: users
+    description: Operations for user management
+  - name: auth
+    description: Authentication endpoints used to access the service
+paths:
+  /:
+    get:
+      tags:
+        - root
+      summary: Get information about the REST API service.
+      responses:
+        '200':
+          description: Info about the REST API service are retrieved. The provided payload provides additional information regarding the API version, the endpoint where to find the full openapi spec file and the route where human-readable documentation is available.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/responseBase200'
+                  - type: object
+                    required:
+                      - data
+                    properties:
+                      data:
+                        type: object
+                        required:
+                          - name
+                          - version
+                          - openapi
+                          - docs
+                        properties:
+                          name:
+                            type: string
+                            example: NovAuth API
+                          version:
+                            type: string
+                            example: 0.0.0
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /auth/login:
+    get:
+      tags:
+        - auth
+      summary: Logs user into the app
+      operationId: loginUser
+      security:
+        - basicAuth: []
+      responses:
+        '200':
+          description: Login completed successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/responseBase200'
+                  - $ref: '#/components/schemas/responseDataTokens'
+        '401':
+          description: Invalid username/password supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseBase401'
+        '403':
+          description: Access to the service was denied because the user is banned
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/responseBase403'
+                  - type: object
+                    required:
+                      - message
+                    properties:
+                      message:
+                        type: string
+                        example: Access denied. Supplied credentials are valid but the user is banned.
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /auth/logout:
+    get:
+      tags:
+        - auth
+      summary: Logs the user out
+      operationId: logoutUser
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Logout completed successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/responseBase200'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /auth/refresh-token:
+    post:
+      tags:
+        - auth
+      summary: Retrieve a new access token
+      operationId: refreshToken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - refreshToken
+              properties:
+                refreshToken:
+                  type: string
+      responses:
+        '200':
+          description: New token pair was successfully retrieved
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/responseBase200'
+                  - $ref: '#/components/schemas/responseDataTokens'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /users/{email}:
+    get:
+      tags:
+        - users
+      summary: Get full details about a single user
+      parameters:
+        - name: email
+          in: path
+          description: Email for the user to retrieve details of. The email should match the one of the currently logged in user.
+          required: true
+          schema:
+            type: string
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: |
+            User info retrieved successfully.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/responseBase200'
+                  - $ref: '#/components/schemas/responseDataUser'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    put:
+      tags:
+        - users
+      summary: Creates a user
+      parameters:
+        - name: email
+          in: path
+          description: Email for the user to create
+          required: true
+          schema:
+            type: string
+      description: |
+        Creates a user for the application. 
+      requestBody:
+        $ref: '#/components/requestBodies/User'
+      security:
+        - {}
+      responses:
+        '201':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/responseBase201'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
