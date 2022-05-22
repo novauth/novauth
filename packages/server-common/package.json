@@ -1,0 +1,40 @@
+{
+  "name": "@novauth/server-common",
+  "private": true,
+  "version": "0.0.0",
+  "description": "The backend server for NovAuth",
+  "keywords": [
+    "server",
+    "library",
+    "authentication",
+    "security",
+    "node.js"
+  ],
+  "author": {
+    "name": "Matteo Agnoletto",
+    "email": "info@epmatt.com",
+    "url": "https://epmatt.com"
+  },
+  "homepage": "https://github.com/novauth/novauth/tree/main/packages/server-common#readme",
+  "license": "GPL-3.0",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib/**/*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/novauth/novauth.git",
+    "baseUrl": "https://github.com/novauth/novauth"
+  },
+  "scripts": {
+    "build": "tsc --build",
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/novauth/novauth/issues"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.4"
+  }
+}
