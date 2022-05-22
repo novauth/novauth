@@ -11,6 +11,7 @@ import logger from './core/logger.js'
 import http from 'http'
 import redis from './core/redis.js'
 import mongo from './core/mongo.js'
+import { generateAssetLinksFile } from './apps/apps.service.js'
 
 /* Create HTTP server. */
 const server = http.createServer(app)
@@ -33,14 +34,15 @@ async function main(): Promise<void> {
     logger.info('Connecting to Redis...')
     await redis.init()
 
+    logger.info('Generate Asset Links file...')
+    await generateAssetLinksFile()
+
     /* Listen on provided port, on all network interfaces. */
     logger.info('Starting the web server...')
     server.on('error', onError)
     server.on('listening', onListening)
     server.listen(port, () => {
-      logger.info(
-        `Web server started at ${String(process.env.SERVER_PORT)}`
-      )
+      logger.info(`Web server started at ${String(process.env.SERVER_PORT)}`)
     })
   } catch (error) {
     logger.info('An error occurred during initialization!')

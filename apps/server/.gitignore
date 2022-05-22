@@ -136,3 +136,6 @@ dist
 
 # tsc output files
 /lib/
+
+# generated assetlinks file
+/public/.well-known/assetlinks.json

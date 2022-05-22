@@ -15,6 +15,7 @@ const app = express()
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms'))
 app.use(express.json({ limit: '5mb' }))
 app.use(express.urlencoded({ extended: false }))
+app.use('/.well-known', express.static('public/.well-known'))
 app.use(cookieParser())
 app.use(
   cors({

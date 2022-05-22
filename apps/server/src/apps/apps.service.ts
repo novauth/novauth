@@ -39,7 +39,7 @@ async function getApp(id: string): Promise<AppOutput | null> {
 }
 
 /**
- * Internal function not meant to be exported for creating an app on the db.
+ * Internal function not meant to perform all the operations to create an app on the system.
  * @param data
  * @returns
  */
@@ -48,7 +48,44 @@ async function createApp(data: AppInput): Promise<AppCreateOutput> {
   const token = await addToken(app)
 
   await AppModel.create(app)
+  await generateAssetLinksFile()
   return { ...makeAppForResponse(app), token }
 }
 
-export { createApp, getApp, AppOutput, AppCreateOutput }
+/**
+ * Generate digital asset file with the currently registered apps and stores it on the filesystem
+ * @param app
+ */
+async function generateAssetLinksFile() {
+  const apps = await AppModel.find()
+  const assetlinksFile = []
+  apps.forEach((element) => {
+    assetlinksFile.push({
+      relation: [
+        'delegate_permission/common.handle_all_urls',
+        'delegate_permission/common.get_login_creds',
+      ],
+      target: {
+        namespace: 'web',
+        site: element.origin,
+      },
+    })
+  })
+  assetlinksFile.push({
+    relation: [
+      'delegate_permission/common.handle_all_urls',
+      'delegate_permission/common.get_login_creds',
+    ],
+    target: {
+      namespace: 'android_app',
+      package_name: process.env.APP_ANDROID_PACKAGE,
+      sha256_cert_fingerprints: [process.env.APP_ANDROID_FINGERPRINT],
+    },
+  })
+  await fs.promises.writeFile(
+    path.join('./public/.well-known/assetlinks.json'),
+    JSON.stringify(assetlinksFile)
+  )
+}
+
+export { createApp, getApp, AppOutput, AppCreateOutput, generateAssetLinksFile }
