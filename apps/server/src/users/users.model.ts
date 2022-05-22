@@ -9,6 +9,7 @@ interface User {
   _id?: string
   email: string
   password: string
+  apps: string[] // list of ids the user is owner of
 }
 
 async function setPassword(user: User, password: string): Promise<void> {
@@ -49,11 +50,13 @@ async function makeUser(data: {
   _id?: string
   email: string
   password: string
+  apps?: string[] 
 }): Promise<User> {
   const user = {
     _id: data._id, // if not present will be init by mongoose
     email: data.email,
-    password: data.password, // set with setPassword if defined
+    password: data.password, // set with setPassword if defined,
+    apps: data.apps ?? [],
   }
   if (data.password !== undefined) await setPassword(user, data.password)
   return user

@@ -30,15 +30,14 @@ async function putUser(
 ): Promise<express.Response | undefined> {
   try {
     const reqUser: any = req.user
-    const result = await putUserFromService(
-      req.body.action,
-      reqUser.sub,
-      req.body.user
-    )
+    const result = await putUserFromService(req.body.action, reqUser.sub, {
+      user: req.body.user,
+      app: req.body.app,
+    })
     /* eslint-disable no-fallthrough */
-    switch (result) {
+    switch (result.result) {
       case 'OK_CREATED':
-        return makeResponse(res, 201, 'User created successfully', {})
+        return makeResponse(res, 201, 'User created successfully', result.data)
       case 'ERROR_USER_ALREADY_EXISTS':
         next(
           makeError(null, 400, 'A user with the same username already exists')

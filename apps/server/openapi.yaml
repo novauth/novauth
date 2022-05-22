@@ -161,6 +161,7 @@ components:
       required:
         - action
         - user
+        - app
       properties:
         action:
           type: string
@@ -175,12 +176,32 @@ components:
               type: string
             password:
               type: string
+        app:
+          type: object
+          properties:
+            origin:
+              type: string
     User:
       type: object
       required:
         - email
+        - apps
       properties:
         email:
+          type: string
+        apps:
+          type: array
+          items:
+            $ref: '#/components/schemas/App'
+    App:
+      type: object
+      required:
+        - id
+        - origin
+      properties:
+        id:
+          type: string
+        origin:
           type: string
   responses:
     InternalServerError:
@@ -395,7 +416,19 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/responseBase201'
+                  - type: object
+                    required:
+                    - data
+                    properties:
+                      data:
+                        type: object
+                        required:
+                        - user
+                        properties:
+                          user:
+                            $ref: '#/components/schemas/User'
         '400':
           $ref: '#/components/responses/BadRequest'
         '500':
           $ref: '#/components/responses/InternalServerError'
+  
