@@ -45,7 +45,7 @@ async function createApp(data: AppInput): Promise<AppCreateOutput> {
   const app = await makeApp(data)
   const token = await addToken(app)
 
-  await AppModel.create()
+  await AppModel.create(app)
   return { ...makeAppForResponse(app), token }
 }
 
