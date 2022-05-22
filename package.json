@@ -18,5 +18,10 @@
   ],
   "devDependencies": {
     "lerna": "^4.0.0"
+  },
+  "scripts": {
+    "build": "bash build.sh",
+    "install-prod": "bash install-prod.sh",
+    "heroku-prebuild": "npm run install-prod"
   }
 }
