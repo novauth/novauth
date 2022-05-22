@@ -1,3 +1,4 @@
+import notification from '../core/notification'
 import DeviceModel, {
   makeDevice,
   Device,
@@ -163,6 +164,30 @@ async function postDevice({ device, pairing }: any): Promise<ResultPostDevice> {
   }
 }
 
+async function pushNotificationToDevice(
+  deviceId: string,
+  payload: any
+): Promise<ResultPushNotificationToDevice> {
+  // retrieve expo token from db
+  const device: Device = await DeviceModel.findOne().byId(deviceId).exec()
+  // send notification
+  notification.push(
+    device.expoPushToken,
+    `Sign in to ${payload.app.name}`,
+    `Press to confirm the authentication request.`,
+    payload
+  )
+  return {
+    result: 'OK_SENT',
+    data: {},
+  }
+}
+
+type ResultPushNotificationToDevice = {
+  result: 'OK_SENT'
+  data: {}
+}
+
 type ResultPostDevice =
   | {
       result: 'OK_CREATED_AND_PAIRED'
@@ -172,7 +197,7 @@ type ResultPostDevice =
       }
     }
   | {
-      result: 'ERROR_WRONG_ACTION' | 'ERROR_DEVICE_ALREADY_EXISTS'
+      result: 'ERROR_DEVICE_ALREADY_EXISTS'
     }
 
 type ResultPutDevice =
@@ -191,6 +216,7 @@ export {
   getDevice,
   postDevice,
   putDevice,
+  pushNotificationToDevice,
   DeviceCreateInput,
   DeviceOutput,
   DeviceCreateOutput,
