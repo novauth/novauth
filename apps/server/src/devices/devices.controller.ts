@@ -44,10 +44,10 @@ async function postDevice(
   next: express.NextFunction
 ): Promise<express.Response | undefined> {
   try {
-    const result = await postDeviceFromService({
-      device: req.body.device,
-      pairing: req.body.pairing,
-    })
+    const result = await postDeviceFromService(
+      req.body.device,
+      req.body.pairing
+    )
     /* eslint-disable no-fallthrough */
     switch (result.result) {
       case 'OK_CREATED_AND_PAIRED':
@@ -92,7 +92,13 @@ async function pushNotificationToDevice(
     /* eslint-enable no-fallthrough */
   } catch (error) {
     console.log(error)
-    next(makeError(null, 500, 'Something went wrong while pushing the notification'))
+    next(
+      makeError(
+        null,
+        500,
+        'Something went wrong while pushing the notification'
+      )
+    )
   }
 }
 

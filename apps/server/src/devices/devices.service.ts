@@ -77,9 +77,9 @@ async function updatePairingStatus(
 
 async function putDevice(
   action: string,
-  { deviceId, pairing }: any
+  { deviceId, pairing }: { deviceId: string; pairing: Omit<Pairing, 'status'> }
 ): Promise<ResultPutDevice> {
-  const deviceItem = await DeviceModel.findOne().byId(deviceId.id).exec()
+  const deviceItem = await DeviceModel.findOne().byId(deviceId).exec()
 
   /* eslint-disable no-fallthrough */
   switch (action) {
@@ -90,7 +90,7 @@ async function putDevice(
         appId: pairing.appId,
         userId: pairing.userId,
       }
-      await addPairing(deviceId, pairing)
+      await addPairing(deviceId, pairingItem)
       return {
         result: 'OK_PAIRED',
         data: {
@@ -134,7 +134,10 @@ async function putDevice(
   /* eslint-enable no-fallthrough */
 }
 
-async function postDevice({ device, pairing }: any): Promise<ResultPostDevice> {
+async function postDevice(
+  device: DeviceCreateInput,
+  pairing: Omit<Pairing, 'status'>
+): Promise<ResultPostDevice> {
   // the request includes both device creation and pairing of the device with an app
   // the request does not contain a device id
   const deviceItem = DeviceModel.findOne({
@@ -150,7 +153,7 @@ async function postDevice({ device, pairing }: any): Promise<ResultPostDevice> {
     // create device, storing the provided access token
 
     const deviceItem = await createDevice({
-      expoPushToken: device.expoPushToken,
+      ...device,
       pairings: [pairingItem],
     })
     // return the pairing information
