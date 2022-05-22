@@ -1,4 +1,5 @@
-import mongoose, { Query, Document, Model, Schema } from 'mongoose'
+import mongoose from 'mongoose'
+import type { Query, Document, Model } from 'mongoose'
 import bcrypt from 'bcrypt'
 
 /**
@@ -20,7 +21,7 @@ async function isPassword(user: User, password: string): Promise<boolean> {
   return await bcrypt.compare(password, user.password)
 }
 
-const schema = new Schema<User, Model<User, UserQueryHelpers>, any, any>({
+const schema = new mongoose.Schema<User, Model<User, UserQueryHelpers>, any, any>({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
 })
@@ -32,7 +33,7 @@ interface UserQueryHelpers {
 schema.query.byEmail = function (
   email: string
 ): Query<any, Document<User>> & UserQueryHelpers {
-  return this.find({ email })
+  return this.findOne({ email })
 }
 
 // 2nd param to `model()` is the Model class to return.

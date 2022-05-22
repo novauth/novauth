@@ -1,10 +1,10 @@
-import notification from '../core/notification'
+import notification from '../core/notification.js'
 import DeviceModel, {
   makeDevice,
   Device,
   Pairing,
   PairingStatus,
-} from './devices.model'
+} from './devices.model.js'
 
 type DeviceCreateInput = Omit<Device, '_id' | 'id'>
 

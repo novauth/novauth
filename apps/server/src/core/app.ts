@@ -1,17 +1,18 @@
 import express from 'express'
 import cookieParser from 'cookie-parser'
 import morgan from 'morgan'
-import path from 'path'
-import indexRouter from './app.routes'
-import usersRouter from '../users/users.routes'
-import authRouter from '../auth/auth.routes'
+import indexRouter from './app.routes.js'
+import usersRouter from '../users/users.routes.js'
+import authRouter from '../auth/auth.routes.js'
+import devicesRouter from '../devices/devices.routes.js'
+import apiDocsRouter from './apidocs.routes.js'
 import cors from 'cors'
 import { middleware as openApiMiddleware } from 'express-openapi-validator'
-import { makeResponse } from './utils'
-import logger from './logger'
+import { makeResponse } from './utils.js'
+import logger from './logger.js'
 
 const app = express()
-app.use(morgan(`${process.env.NODE_ENV}`))
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms'))
 app.use(express.json({ limit: '5mb' }))
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
@@ -22,15 +23,17 @@ app.use(
 )
 app.use(
   openApiMiddleware({
-    apiSpec: path.join(__dirname, '../../openapi.yaml'),
+    apiSpec: ('openapi.yaml'),
     validateRequests: true,
-    ignorePaths: (path: string) => path === '/',
+    ignorePaths: (path: string) => path === '/' || path.startsWith('/api-docs') || path.startsWith('/.well-known'),
   })
 )
 
 app.use('/', indexRouter)
+app.use('/api-docs', apiDocsRouter)
 app.use('/users', usersRouter)
 app.use('/auth', authRouter)
+app.use('/devices', devicesRouter)
 
 app.use(
   (

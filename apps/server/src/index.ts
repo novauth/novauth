@@ -2,15 +2,15 @@
 /**
  * Init code
  */
-import './core/init'
+import './core/init.js'
 /**
  * Module dependencies.
  */
-import app from './core/app'
-import logger from './core/logger'
+import app from './core/app.js'
+import logger from './core/logger.js'
 import http from 'http'
-import redis from './core/redis'
-import mongo from './core/mongo'
+import redis from './core/redis.js'
+import mongo from './core/mongo.js'
 
 /* Create HTTP server. */
 const server = http.createServer(app)

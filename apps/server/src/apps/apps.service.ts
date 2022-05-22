@@ -1,4 +1,6 @@
-import AppModel, { makeApp, App, addToken } from './apps.model'
+import AppModel, { makeApp, App, addToken } from './apps.model.js'
+import fs from 'fs'
+import path from 'path'
 
 /**
  * The App type used when creating or updating a new app

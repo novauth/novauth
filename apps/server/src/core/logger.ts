@@ -1,3 +1,8 @@
-import logger from 'logger'
+import winston from 'winston'
 
-export default logger.createLogger(process.env.NODE_ENV)
+const logger = winston.createLogger({
+    transports: [
+      new winston.transports.Console(),
+    ]
+  });
+export default logger

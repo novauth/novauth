@@ -3,12 +3,12 @@ import passportJwt from 'passport-jwt'
 import passportHttp from 'passport-http'
 import jsonwebtoken from 'jsonwebtoken'
 import crypto from 'crypto'
-import redis from '../core/redis'
+import redis from '../core/redis.js'
 import { v4 as uuidv4 } from 'uuid'
 import express from 'express'
 
-import UserModel, { isPassword } from '../users/users.model'
-import { makeError } from '../core/utils'
+import UserModel, { isPassword } from '../users/users.model.js'
+import { makeError } from '../core/utils.js'
 
 passport.use(
   'jwt-at',

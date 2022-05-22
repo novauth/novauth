@@ -1,9 +1,9 @@
 import {
   getUser as getUserfromService,
   putUser as putUserFromService,
-} from './users.service'
+} from './users.service.js'
 import express from 'express'
-import { makeError, makeResponse } from '../core/utils'
+import { makeError, makeResponse } from '../core/utils.js'
 
 async function getUser(
   req: express.Request,

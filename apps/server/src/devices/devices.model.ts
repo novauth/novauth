@@ -1,5 +1,6 @@
-import mongoose, { Model, Schema, Query, Document } from 'mongoose'
-import uuid from 'uuid'
+import mongoose from 'mongoose'
+import type { Query, Document, Model } from 'mongoose'
+import {v4 as uuidv4} from 'uuid'
 
 type PairingStatus = 'PENDING' | 'CONFIRMED' | 'VERIFIED'
 
@@ -20,7 +21,7 @@ interface Device {
   pairings: Pairing[]
 }
 
-const schema = new Schema<Device, Model<Device, DeviceQueryHelpers>, any, any>({
+const schema = new mongoose.Schema<Device, Model<Device, DeviceQueryHelpers>, any, any>({
   id: { type: String, required: true },
   expoPushToken: { type: String, required: true },
 })
@@ -32,7 +33,7 @@ interface DeviceQueryHelpers {
 schema.query.byId = function (
   id: string
 ): Query<any, Document<Device>> & DeviceQueryHelpers {
-  return this.find({ id })
+  return this.findOne({ id })
 }
 
 // 2nd param to `model()` is the Model class to return.
@@ -53,7 +54,7 @@ async function makeDevice(data: {
 }): Promise<Device> {
   const Device = {
     _id: data._id, // if not present will be init by mongoose
-    id: uuid.v4(),
+    id: uuidv4(),
     expoPushToken: data.expoPushToken,
     pairings: data.pairings ?? [],
   }

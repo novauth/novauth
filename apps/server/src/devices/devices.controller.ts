@@ -2,9 +2,9 @@ import {
   putDevice as putDeviceFromService,
   postDevice as postDeviceFromService,
   pushNotificationToDevice as pushNotificationToDeviceFromService,
-} from './devices.service'
+} from './devices.service.js'
 import express from 'express'
-import { makeError, makeResponse } from '../core/utils'
+import { makeError, makeResponse } from '../core/utils.js'
 
 async function putDevice(
   req: express.Request,

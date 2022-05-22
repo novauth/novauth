@@ -3,8 +3,8 @@ import {
   AppOutput,
   createApp,
   getApp,
-} from '../apps/apps.service'
-import UserModel, { makeUser, User } from './users.model'
+} from '../apps/apps.service.js'
+import UserModel, { makeUser, User } from './users.model.js'
 
 /**
  * The User type used when interacting with a user

@@ -1,6 +1,7 @@
 {
   "name": "@novauth/server",
   "private": true,
+  "type": "module",
   "version": "0.0.0",
   "description": "The backend server for NovAuth",
   "keywords": [
@@ -51,7 +52,10 @@
     "passport-http": "^0.3.0",
     "passport-jwt": "^4.0.0",
     "redis": "^3.1.2",
-    "uuid": "^8.3.2"
+    "swagger-ui-express": "^4.4.0",
+    "uuid": "^8.3.2",
+    "winston": "^3.7.2",
+    "yamljs": "^0.3.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
@@ -65,7 +69,9 @@
     "@types/passport-http": "^0.3.9",
     "@types/passport-jwt": "^3.0.6",
     "@types/redis": "^2.8.31",
+    "@types/swagger-ui-express": "^4.1.3",
     "@types/uuid": "^8.3.4",
+    "@types/yamljs": "^0.2.31",
     "typescript": "^4.6.4"
   }
 }

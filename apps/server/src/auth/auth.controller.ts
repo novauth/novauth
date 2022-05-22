@@ -1,12 +1,12 @@
 import express from 'express'
-import { makeResponse, responseBody } from '../core/utils'
+import { makeResponse, responseBody } from '../core/utils.js'
 import {
   basicAuthMiddleware,
   generateTokens,
   invalidateTokens,
   jwtAuthMiddleware,
   jwtRefreshMiddleware,
-} from './auth.service'
+} from './auth.service.js'
 
 async function login(
   req: express.Request,

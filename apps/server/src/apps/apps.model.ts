@@ -1,5 +1,6 @@
-import mongoose, { Model, Schema, Query, Document } from 'mongoose'
-import uuid from 'uuid'
+import mongoose from 'mongoose'
+import type { Query, Document, Model } from 'mongoose'
+import { v4 as uuidv4 } from 'uuid'
 import bcrypt from 'bcrypt'
 import crypto from 'crypto'
 
@@ -14,24 +15,34 @@ interface App {
   origin: string
 }
 
-const schema = new Schema<App, Model<App, AppQueryHelpers>, any, any>({
+const schema = new mongoose.Schema<
+  App,
+  mongoose.Model<App, AppQueryHelpers>,
+  any,
+  any
+>({
   id: { type: String, required: true },
   token: { type: String, required: false },
   origin: { type: String, required: true },
 })
 
 interface AppQueryHelpers {
-  byId(id: string): Query<any, Document<App>> & AppQueryHelpers
+  byId(
+    id: string
+  ): Query<any, Document<App>> & AppQueryHelpers
 }
 
 schema.query.byId = function (
   id: string
 ): Query<any, Document<App>> & AppQueryHelpers {
-  return this.find({ id })
+  return this.findOne({ id })
 }
 
 // 2nd param to `model()` is the Model class to return.
-const model = mongoose.model<App, Model<App, AppQueryHelpers>>('App', schema)
+const model = mongoose.model<App, Model<App, AppQueryHelpers>>(
+  'App',
+  schema
+)
 
 /**
  * Creates a new App object with the given App data. Initializes fields to their default values if no value is provided.
@@ -41,7 +52,7 @@ const model = mongoose.model<App, Model<App, AppQueryHelpers>>('App', schema)
 async function makeApp(data: { _id?: string; origin: string }): Promise<App> {
   const App = {
     _id: data._id, // if not present will be init by mongoose
-    id: uuid.v4(),
+    id: uuidv4(),
     origin: data.origin,
   }
   return App
