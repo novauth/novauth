@@ -203,6 +203,19 @@ components:
           type: string
         origin:
           type: string
+    Pairing:
+      type: object
+      required:
+      - appId
+      - userId
+      - status
+      properties:
+        appId:
+          type: string
+        userId:
+          type: string
+        status:
+          type: string
   responses:
     InternalServerError:
       description: Internal Server Error
@@ -237,6 +250,8 @@ components:
 tags:
   - name: users
     description: Operations for user management
+  - name: devices
+    description: Operations for device management, pairing and notification features
   - name: auth
     description: Authentication endpoints used to access the service
 paths:
@@ -427,6 +442,161 @@ paths:
                         properties:
                           user:
                             $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /devices:
+    post:
+      tags:
+      - devices
+      summary: Creates a device and pairs it with the provided app
+      description: |
+        Registers a device to the application and pairs it with the provided app. 
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                device:
+                  type: object
+                  properties:
+                    expoPushToken:
+                      type: string
+                pairing:
+                  type: object
+                  properties:
+                    appId:
+                      type: string
+                    userId:
+                      type: string
+                
+      security:
+        - {}
+      responses:
+        '201':
+          description: Device and pairing created successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/responseBase201'
+                  - type: object
+                    required:
+        
+                    - data
+                    properties:
+                      data:
+                        type: object
+                        required:
+                        - deviceId
+                        - pairing
+                        properties:
+                          deviceId:
+                            type: string
+                          pairing:
+                            $ref: '#/components/schemas/Pairing'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /devices/{id}:
+    put:
+      tags:
+      - devices
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the device
+          schema:
+            type: string
+      summary: Updates the status of a device
+      description: |
+        Update the status of a device, either pairing it with a new app and user, or updating the status of a pairing.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                action:
+                  type: string
+                pairing:
+                  type: object
+                  properties:
+                    appId:
+                      type: string
+                    userId:
+                      type: string
+      security:
+        - {}
+      responses:
+        '200':
+          description: Device updated successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/responseBase200'
+                  - type: object
+                    required:
+                    - data
+                    properties:
+                      data:
+                        type: object
+                        required:
+                        - deviceId
+                        - pairing
+                        properties:
+                          deviceId:
+                            type: string
+                          pairing:
+                            $ref: '#/components/schemas/Pairing'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /devices/{id}/push:
+    post:
+      tags:
+      - devices
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of the device
+        schema:
+          type: string
+      summary: Sends a notification to a device
+      description: |
+        Sends a notification to a device.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                payload:
+                  type: object
+      security:
+        - {}
+      responses:
+        '200':
+          description: Notification sent
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/responseBase200'
+                  - type: object
+                    required:
+                    - data
+                    properties:
+                      data:
+                        type: object
+                        properties: {}
         '400':
           $ref: '#/components/responses/BadRequest'
         '500':

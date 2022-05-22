@@ -13,7 +13,7 @@ async function putDevice(
 ): Promise<express.Response | undefined> {
   try {
     const result = await putDeviceFromService(req.body.action, {
-      device: req.params.deviceId,
+      deviceId: req.params.deviceId,
       pairing: req.body.pairing,
     })
     /* eslint-disable no-fallthrough */

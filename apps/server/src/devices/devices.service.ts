@@ -77,9 +77,9 @@ async function updatePairingStatus(
 
 async function putDevice(
   action: string,
-  { device, pairing }: any
+  { deviceId, pairing }: any
 ): Promise<ResultPutDevice> {
-  const deviceItem = await DeviceModel.findOne().byId(device.id).exec()
+  const deviceItem = await DeviceModel.findOne().byId(deviceId.id).exec()
 
   /* eslint-disable no-fallthrough */
   switch (action) {
@@ -90,7 +90,7 @@ async function putDevice(
         appId: pairing.appId,
         userId: pairing.userId,
       }
-      await addPairing(device.id, pairing)
+      await addPairing(deviceId, pairing)
       return {
         result: 'OK_PAIRED',
         data: {
@@ -101,7 +101,7 @@ async function putDevice(
     case 'pair_confirm': {
       // confirm a pairing: this is done by the app server upon receiving the registration confirmation from the authenticator
       const pairingItem = await updatePairingStatus(
-        device.id,
+        deviceId,
         pairing.appId,
         pairing.userId,
         'CONFIRMED'
@@ -116,7 +116,7 @@ async function putDevice(
     case 'pair_verify': {
       // verify a pairing: this is done by the app server after having verified the first push authentication from the authenticator
       const pairingItem = await updatePairingStatus(
-        device.id,
+        deviceId,
         pairing.appId,
         pairing.userId,
         'VERIFIED'
