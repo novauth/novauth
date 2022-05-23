@@ -21,9 +21,15 @@ async function isPassword(user: User, password: string): Promise<boolean> {
   return await bcrypt.compare(password, user.password)
 }
 
-const schema = new mongoose.Schema<User, Model<User, UserQueryHelpers>, any, any>({
+const schema = new mongoose.Schema<
+  User,
+  Model<User, UserQueryHelpers>,
+  any,
+  any
+>({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  apps: [{ type: String, required: true }],
 })
 
 interface UserQueryHelpers {
@@ -51,7 +57,7 @@ async function makeUser(data: {
   _id?: string
   email: string
   password: string
-  apps?: string[] 
+  apps?: string[]
 }): Promise<User> {
   const user = {
     _id: data._id, // if not present will be init by mongoose

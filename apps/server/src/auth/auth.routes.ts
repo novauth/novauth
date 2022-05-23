@@ -1,11 +1,15 @@
 import express from 'express'
-import { basicAuthMiddleware, jwtAuthMiddleware, jwtRefreshMiddleware } from './auth.service.js'
-import { login, logout, refreshToken } from './auth.controller.js'
+import {
+  authMiddleware,
+  login,
+  logout,
+  refreshToken,
+} from './auth.controller.js'
 
 const router = express.Router()
 
-router.get('/login', basicAuthMiddleware, login)
-router.get('/logout', jwtAuthMiddleware, logout)
-router.post('/refresh-token', jwtRefreshMiddleware, refreshToken)
+router.get('/login', authMiddleware('basic'), login)
+router.get('/logout', authMiddleware('at'), logout)
+router.post('/refresh-token', authMiddleware('rt'), refreshToken)
 
 export default router
