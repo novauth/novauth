@@ -40,7 +40,7 @@ async function putUser(
         return makeResponse(res, 201, 'User created successfully', result.data)
       case 'ERROR_USER_ALREADY_EXISTS':
         next(
-          makeError(null, 400, 'A user with the same username already exists')
+          makeError(null, 400, 'A user with the same email already exists')
         )
         break
     }
