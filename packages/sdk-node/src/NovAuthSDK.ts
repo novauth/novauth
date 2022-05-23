@@ -121,11 +121,12 @@ class NovAuthSDK {
       }) // will throw on error
 
       const authnrData = regResult.authnrData
-      // API: confirm pairing
+      // API: verify pairing
       // TODO: implement the API
 
       // return the pairing data
       return {
+        status: 'verified',
         userID: operation.data.userId,
         device: {
           id: response.id,
@@ -135,6 +136,28 @@ class NovAuthSDK {
           counter: authnrData.get('signCount'),
           publicKey: authnrData.get('credentialPublicKeyPem'),
         },
+      }
+    } catch (err) {
+      throw 'The pairing cannot be verified: ' + err
+    }
+  }
+
+  /**
+   * Confirm a pairing.
+   * This method is called internally as the first successful push authentication is performed.
+   * @param pairing
+   * @returns
+   */
+  private async pairingConfirm(pairing: Pairing): Promise<Pairing> {
+    try {
+      // API: confirm pairing
+      // TODO: implement the API
+
+      // return the pairing data
+      const { status, ...pairingMerge } = pairing
+      return {
+        status: 'confirmed',
+        ...pairingMerge,
       }
     } catch (err) {
       throw 'The pairing cannot be confirmed: ' + err
@@ -149,6 +172,15 @@ class NovAuthSDK {
     pairing: Pairing
   ): Promise<PushAuthenticationIntent> {
     try {
+      /**
+       * first check if the request can be performed
+       * a push authentication can be requested only if
+       * - a pairing has been confirmed: the device can be used as an authentication factor
+       * - a pairing has been verified: the device needs to be confirmed by performing the first successful authentication
+       *  */ 
+      if (pairing.status !== 'confirmed' && pairing.status !== 'verified')
+        throw 'The pairing was not confirmed or the confirm process already started.'
+      
       const authenticationOptions = await this.f2l.assertionOptions()
       authenticationOptions.allowCredentials = [
         {
@@ -161,12 +193,19 @@ class NovAuthSDK {
       // provide assertion and deviceID
       // TODO:
 
+      // if this is the first time a push authentication is requested for the user, edit the pairing status
+      const { status, ...pairingMerge } = pairing
+      const returnPairing: Pairing =
+        status === 'verified'
+          ? { status: 'confirm_pending', ...pairingMerge }
+          : pairing
+
       // return the operation data to be persistently stored and be later referenced when the authenticator
       // sends a response
       return {
         operation: PushAuthenticationOperation(
           Base64Url.toBase64(Buffer.from(authenticationOptions.challenge)),
-          pairing
+          returnPairing
         ),
       }
     } catch (err) {
@@ -194,8 +233,14 @@ class NovAuthSDK {
         userHandle: operation.data.pairing.userID,
       })
       const authnrData = authnResult.authnrData
+
+      // if this is the first successful push authentication, confirm the pairing
+      const { credential, ...pairingMerge } =
+        operation.data.pairing.status === 'confirm_pending'
+          ? await this.pairingConfirm(operation.data.pairing)
+          : operation.data.pairing
+
       // return the update pairing data, to be persistently stored for future access
-      const { credential, ...pairingMerge } = operation.data.pairing
       return {
         credential: {
           id: operation.data.pairing.credential.id,
