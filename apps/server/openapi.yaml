@@ -4,7 +4,7 @@ info:
   title: 'NovAuth API'
   description: 'Specification for the NovAuth API'
 servers:
-  - url: https://api.novauth.com
+  - url: https://novauth.herokuapp.com/
 components:
   securitySchemes:
     basicAuth:
