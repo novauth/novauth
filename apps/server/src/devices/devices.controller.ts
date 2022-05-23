@@ -79,27 +79,25 @@ async function pushNotificationToDevice(
   res: express.Response,
   next: express.NextFunction
 ): Promise<express.Response | undefined> {
-  try {
-    const result = await pushNotificationToDeviceFromService(
-      req.params.deviceId,
-      req.body.payload
-    )
-    /* eslint-disable no-fallthrough */
-    switch (result.result) {
-      case 'OK_SENT':
-        return makeResponse(res, 200, 'Notification sent', result.data)
-    }
-    /* eslint-enable no-fallthrough */
-  } catch (error) {
-    console.log(error)
-    next(
-      makeError(
-        null,
-        500,
-        'Something went wrong while pushing the notification'
+  const result = await pushNotificationToDeviceFromService(
+    req.params.deviceId,
+    req.body.payload
+  )
+  /* eslint-disable no-fallthrough */
+  switch (result.result) {
+    case 'OK_SENT':
+      return makeResponse(res, 200, 'Notification sent', result.data)
+    default:
+      next(
+        makeError(
+          null,
+          500,
+          'Something went wrong while pushing the notification'
+        )
       )
-    )
+      break
   }
+  /* eslint-enable no-fallthrough */
 }
 
 export { putDevice, postDevice, pushNotificationToDevice }

@@ -42,10 +42,11 @@ async function main(): Promise<void> {
     server.on('error', onError)
     server.on('listening', onListening)
     server.listen(port, () => {
-      logger.info(`Web server started at ${String(process.env.SERVER_PORT)}`)
+      logger.info(`Web server started at ${port}`)
     })
   } catch (error) {
-    logger.info('An error occurred during initialization!')
+    logger.error('An error occurred during initialization!')
+    logger.error(error)
   }
 }
 
@@ -86,10 +87,10 @@ function onError(error: any): void {
   // handle specific listen errors with friendly messages
   switch (error.code) {
     case 'EACCES':
-      console.error(bind + ' requires elevated privileges')
+      logger.error(bind + ' requires elevated privileges')
       process.exit(1)
     case 'EADDRINUSE':
-      console.error(bind + ' is already in use')
+      logger.error(bind + ' is already in use')
       process.exit(1)
     default:
       throw error

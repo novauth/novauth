@@ -174,22 +174,32 @@ async function pushNotificationToDevice(
   // retrieve expo token from db
   const device: Device = await DeviceModel.findOne().byId(deviceId).exec()
   // send notification
-  notification.push(
-    device.expoPushToken,
-    `Sign in to ${payload.app.name}`,
-    `Press to confirm the authentication request.`,
-    payload
-  )
+  try {
+    notification.push(
+      device.expoPushToken,
+      `Sign in to ${payload.app.name}`,
+      `Press to confirm the authentication request.`,
+      payload
+    )
+  } catch (error) {
+    return {
+      result: 'ERROR_NOT_SENT',
+    }
+  }
   return {
     result: 'OK_SENT',
     data: {},
   }
 }
 
-type ResultPushNotificationToDevice = {
-  result: 'OK_SENT'
-  data: {}
-}
+type ResultPushNotificationToDevice =
+  | {
+      result: 'OK_SENT'
+      data: {}
+    }
+  | {
+      result: 'ERROR_NOT_SENT'
+    }
 
 type ResultPostDevice =
   | {
