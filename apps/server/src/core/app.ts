@@ -8,7 +8,7 @@ import devicesRouter from '../devices/devices.routes.js'
 import apiDocsRouter from './apidocs.routes.js'
 import cors from 'cors'
 import { middleware as openApiMiddleware } from 'express-openapi-validator'
-import { makeResponse } from './utils.js'
+import { ControllerError, makeApiError, setResponse } from './utils.js'
 import logger from './logger.js'
 
 const app = express()
@@ -24,9 +24,12 @@ app.use(
 )
 app.use(
   openApiMiddleware({
-    apiSpec: ('openapi.yaml'),
+    apiSpec: 'openapi.yaml',
     validateRequests: true,
-    ignorePaths: (path: string) => path === '/' || path.startsWith('/api-docs') || path.startsWith('/.well-known'),
+    ignorePaths: (path: string) =>
+      path === '/' ||
+      path.startsWith('/api-docs') ||
+      path.startsWith('/.well-known'),
   })
 )
 
@@ -38,21 +41,24 @@ app.use('/devices', devicesRouter)
 
 app.use(
   (
-    err: any,
+    err: ControllerError,
     req: express.Request,
     res: express.Response,
     next: express.NextFunction
   ) => {
     if (err.error !== null && err.error !== undefined) {
-      logger.error('An error occurred while serving a request!')
+      logger.error('Something went wrong while serving the request.')
       logger.error('-----------------------------------------')
       logger.error(err.error)
       logger.error('-----------------------------------------')
     }
-    return makeResponse(
+    return setResponse(
       res,
-      err.status === undefined ? 500 : err.status,
-      err.message
+      makeApiError(
+        err.apiError?.status ?? 500,
+        err.apiError?.message ??
+          'Something went wrong while serving the request.'
+      )
     )
   }
 )

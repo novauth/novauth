@@ -1,5 +1,9 @@
 import express from 'express'
-import { makeResponse, responseBody } from '../core/utils.js'
+import {
+  setResponse,
+  makeApiResponse,
+  makeControllerError,
+} from '../core/utils.js'
 import {
   basicAuthMiddleware,
   generateTokens,
@@ -15,12 +19,21 @@ async function login(
 ): Promise<express.Response | undefined> {
   if (req.user !== undefined) {
     const [accessToken, refreshToken] = await generateTokens(req.user)
-    return makeResponse(res, 200, 'Login completed succesfully', {
-      accessToken,
-      refreshToken,
-    })
+    return setResponse(
+      res,
+      makeApiResponse(200, 'Login completed succesfully', {
+        accessToken,
+        refreshToken,
+      })
+    )
   }
-  next(responseBody(500, 'Something went wrong while performing the login'))
+  next(
+    makeControllerError(
+      null,
+      500,
+      'Something went wrong while performing the login'
+    )
+  )
 }
 
 async function refreshToken(
@@ -30,12 +43,21 @@ async function refreshToken(
 ): Promise<express.Response | undefined> {
   if (req.user !== undefined) {
     const [accessToken, refreshToken] = await generateTokens(req.user)
-    return makeResponse(res, 200, 'New tokens obtained succesfully', {
-      accessToken,
-      refreshToken,
-    })
+    return setResponse(
+      res,
+      makeApiResponse(200, 'New tokens obtained succesfully', {
+        accessToken,
+        refreshToken,
+      })
+    )
   }
-  next(responseBody(500, 'Something went wrong while getting the new tokens'))
+  next(
+    makeControllerError(
+      null,
+      500,
+      'Something went wrong while getting the new tokens'
+    )
+  )
 }
 
 async function logout(
@@ -46,9 +68,18 @@ async function logout(
   const reqUser: any = req.user
   if (reqUser !== undefined) {
     await invalidateTokens(reqUser.sub, reqUser.jti)
-    return makeResponse(res, 200, 'Logout completed successfully', {})
+    return setResponse(
+      res,
+      makeApiResponse(200, 'Logout completed successfully', {})
+    )
   }
-  next(responseBody(500, 'Something went wrong while performing the logout'))
+  next(
+    makeControllerError(
+      null,
+      500,
+      'Something went wrong while performing the logout'
+    )
+  )
 }
 
 function authMiddleware(

@@ -73,4 +73,10 @@ function setResponse<T>(
 ): express.Response<APIError | APIResponse<T>> {
   return res.status(body.status).json(body)
 }
-export { makeApiResponse, makeApiError, makeControllerError, setResponse }
+export {
+  makeApiResponse,
+  makeApiError,
+  makeControllerError,
+  setResponse,
+  ControllerError,
+}

@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from 'uuid'
 import express from 'express'
 
 import UserModel, { isPassword } from '../users/users.model.js'
-import { makeError } from '../core/utils.js'
+import { makeControllerError } from '../core/utils.js'
 
 passport.use(
   'jwt-at',
@@ -250,12 +250,12 @@ const basicAuthMiddleware = function (
       }
       if (user !== null && user !== false) {
         if (user.banned === true)
-          return next(makeError(null, 403, 'The user is banned'))
+          return next(makeControllerError(null, 403, 'The user is banned'))
         req.user = user
         return next()
       }
 
-      return next(makeError(null, 401, 'Invalid email/password'))
+      return next(makeControllerError(null, 401, 'Invalid email/password'))
     }
   )(req, res, next)
 }

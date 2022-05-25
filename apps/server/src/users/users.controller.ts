@@ -3,7 +3,11 @@ import {
   putUser as putUserFromService,
 } from './users.service.js'
 import express from 'express'
-import { makeError, makeResponse } from '../core/utils.js'
+import {
+  setResponse,
+  makeApiResponse,
+  makeControllerError,
+} from '../core/utils.js'
 
 async function getUser(
   req: express.Request,
@@ -14,12 +18,18 @@ async function getUser(
     const reqUser: any = req.user
     const user = await getUserfromService(req.params.email)
     if (user !== null) {
-      return makeResponse(res, 200, '', user)
+      return setResponse(res, makeApiResponse(200, '', user))
     }
-    next(makeError(null, 404, 'User not found'))
+    next(makeControllerError(null, 404, 'User not found'))
   } catch (error) {
     console.log(error)
-    next(makeError(null, 500, 'Something went wrong while fetching the user'))
+    next(
+      makeControllerError(
+        null,
+        500,
+        'Something went wrong while fetching the user'
+      )
+    )
   }
 }
 
@@ -37,17 +47,30 @@ async function putUser(
     /* eslint-disable no-fallthrough */
     switch (result.result) {
       case 'OK_CREATED':
-        return makeResponse(res, 201, 'User created successfully', result.data)
+        return setResponse(
+          res,
+          makeApiResponse(201, 'User created successfully', result.data)
+        )
       case 'ERROR_USER_ALREADY_EXISTS':
         next(
-          makeError(null, 400, 'A user with the same email already exists')
+          makeControllerError(
+            null,
+            400,
+            'A user with the same email already exists'
+          )
         )
         break
     }
     /* eslint-enable no-fallthrough */
   } catch (error) {
     console.log(error)
-    next(makeError(null, 500, 'Something went wrong while updating the user'))
+    next(
+      makeControllerError(
+        null,
+        500,
+        'Something went wrong while updating the user'
+      )
+    )
   }
 }
 
@@ -66,7 +89,7 @@ function checkRequestingUser(
   const reqUser: any = req.user
   if (req.params.email !== reqUser.sub)
     next(
-      makeError(
+      makeControllerError(
         null,
         403,
         'Cannot access the requested resource owned by another user'
