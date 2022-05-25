@@ -1,5 +1,5 @@
-import TypedResponse from '../TypedResponse'
+import APIResponse from '../base/APIResponse'
 
-type APIPushAuthenticationResponse = TypedResponse<{}>
+type APIPushAuthenticationResponse = APIResponse<{}>
 
 export default APIPushAuthenticationResponse

@@ -1,13 +1,32 @@
 /**
  * Set of utilities used across the whole app
  */
-
 import {
   ErrorStatus,
   NormalStatus,
-  TypedResponse,
+  APIResponse,
+  APIError,
 } from '@novauth/server-common'
 import express from 'express'
+
+/**
+ * Defines an error in the API, signaled by a controller
+ */
+interface ControllerError {
+  error: any | null
+  apiError?: APIError
+}
+
+function makeControllerError(
+  error: any | null,
+  status: ErrorStatus,
+  message: string
+): ControllerError {
+  return {
+    error,
+    apiError: makeApiError(status, message),
+  }
+}
 
 /**
  * Make a custom response body given the parameters
@@ -16,66 +35,42 @@ import express from 'express'
  * @param data
  * @returns the response body object
  */
-function responseBody<T>(
-  status: ErrorStatus,
-  message: string | null
-): TypedResponse<T>
-function responseBody<T>(
+function makeApiResponse<T>(
   status: NormalStatus,
-  message: string | null,
+  message: string,
   data: T
-): TypedResponse<T>
-function responseBody<T>(
-  status: any,
-  message: string | null,
-  data?: T
-): TypedResponse<T> {
+): APIResponse<T> {
   return {
     status,
-    message: message !== null ? message : '',
+    message,
     data,
   }
 }
 
-function makeResponse(
-  res: express.Response,
-  status: ErrorStatus,
-  message: string | null
-): express.Response
-function makeResponse(
-  res: express.Response,
-  status: NormalStatus,
-  message: string | null,
-  data: object
-): express.Response
-function makeResponse(
-  res: express.Response,
-  status: any,
-  message: string | null,
-  data?: object
-): express.Response {
-  return res.status(status).json(responseBody(status, message, data))
-}
-
 /**
- * Defines an error in the API
+ * Make a custom API error given the parameters
+ * @param status
+ * @param message
+ * @returns
  */
-interface APIError {
-  error: any | null
-  status: number
-  message: string
-}
-
-function makeError(
-  error: any | null,
-  status: number,
-  message: string
-): APIError {
+function makeApiError(status: ErrorStatus, message: string): APIError {
   return {
-    error,
     status,
     message,
   }
 }
 
-export { makeResponse, responseBody, makeError }
+/**
+ * Sets the body and status to the provided response object
+ * @param res
+ * @param status
+ * @param body
+ * @returns
+ */
+function setResponse<T>(
+  res: express.Response<any>,
+  body: APIError | APIResponse<T>
+): express.Response<APIError | APIResponse<T>> {
+  return res.status(body.status).json(body)
+}
+export { makeApiResponse, makeApiError, makeControllerError, setResponse }

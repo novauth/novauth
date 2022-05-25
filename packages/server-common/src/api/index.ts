@@ -1,4 +1,6 @@
-export { default as TypedResponse } from './TypedResponse'
+export { default as BaseResponse } from './base/BaseResponse'
+export { default as APIResponse } from './base/APIResponse'
+export { default as APIError } from './base/APIError'
 export { NormalStatus, ErrorStatus } from './Status'
 export { default as APIDeviceUpdateRequest } from './devices/APIDeviceUpdateRequest'
 export { default as APIDeviceUpdateResponse } from './devices/APIDeviceUpdateResponse'

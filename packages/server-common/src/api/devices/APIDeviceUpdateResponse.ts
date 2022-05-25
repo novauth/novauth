@@ -1,11 +1,11 @@
 import { DeviceID, Pairing } from '../../devices'
-import TypedResponse from '../TypedResponse'
+import APIResponse from '../base/APIResponse'
 
 interface APIDeviceUpdateResponseData {
   deviceId: DeviceID
   pairing: Pairing
 }
 
-type APIPairingUpdateResponse = TypedResponse<APIDeviceUpdateResponseData>
+type APIPairingUpdateResponse = APIResponse<APIDeviceUpdateResponseData>
 
 export default APIPairingUpdateResponse
