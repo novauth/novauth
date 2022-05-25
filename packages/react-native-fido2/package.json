@@ -1,6 +1,6 @@
 {
   "name": "@novauth/react-native-fido2",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A FIDO2 API wrapper for React Native",
   "type": "module",
   "keywords": [
