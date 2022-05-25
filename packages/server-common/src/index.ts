@@ -1,5 +1,5 @@
-export * from './http'
-
+export * from './api'
+export * from './devices'
 /** Custom type to replace the typoe of some properties with another type
  *  Example:
  * ```
