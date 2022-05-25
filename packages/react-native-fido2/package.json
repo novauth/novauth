@@ -32,6 +32,9 @@
   "bugs": {
     "url": "https://github.com/novauth/novauth/issues"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "peerDependencies": {
     "react": ">=17.0.0",
     "react-native": ">=0.68.0 <1.0.x"
