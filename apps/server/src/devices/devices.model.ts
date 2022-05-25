@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 import type { Query, Document, Model } from 'mongoose'
 import { v4 as uuidv4 } from 'uuid'
-import { Pairing, DeviceID } from '@novauth/server-common'
+import { Pairing, DeviceID } from '@novauth/common'
 
 /**
  * The Device type used in the data model

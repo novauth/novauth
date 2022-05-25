@@ -6,7 +6,7 @@ import {
   NormalStatus,
   APIResponse,
   APIError,
-} from '@novauth/server-common'
+} from '@novauth/common'
 import express from 'express'
 
 /**

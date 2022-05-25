@@ -14,7 +14,7 @@ import {
   APIDeviceUpdateResponse,
   APIPushAuthenticationRequest,
   APIPushAuthenticationResponse,
-} from '@novauth/server-common'
+} from '@novauth/common'
 
 async function putDevice(
   req: express.Request,
