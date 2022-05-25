@@ -4,7 +4,7 @@ import { OperationID } from '../Operation'
 
 interface PairingResponse {
   operationID: OperationID
-  id: DeviceID
+  deviceId: DeviceID
   credential: AttestationResult
 }
 

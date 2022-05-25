@@ -11,9 +11,16 @@ import PairingOperation from './pairing/PairingOperation'
 import PushAuthenticationOperation from './push-authentication/PushAuthenticationOperation'
 import Pairing from './pairing/Pairing'
 import User from './User'
+import axios from 'axios'
+import {
+  APIDeviceUpdateRequest,
+  APIDeviceUpdateResponse,
+  APIPushAuthenticationRequest,
+} from '@novauth/common'
 
 interface NovAuthSDKOptions {
-  server: {
+  app: {
+    id: string
     origin: string
     webhook: string
     name: string
@@ -23,6 +30,7 @@ interface NovAuthSDKOptions {
 }
 
 class NovAuthSDK {
+  private readonly NOVAUTH_API_URL = 'https://novauth.herokuapp.com'
   private readonly VERSION = '0.0.0'
   private readonly NOTIFICATION_PROVIDER = 'novauth'
 
@@ -51,9 +59,9 @@ class NovAuthSDK {
 
     this.f2l = new Fido2Lib({
       timeout: this.TIMEOUT_SECONDS,
-      rpId: options.server.origin,
-      rpName: options.server.name,
-      rpIcon: options.server.iconUrl,
+      rpId: options.app.origin,
+      rpName: options.app.name,
+      rpIcon: options.app.iconUrl,
       challengeSize: this.CHALLENGE_SIZE,
       attestation: this.ATTESTATION,
       cryptoParams: this.CRYPTO_PARAMS,
@@ -89,8 +97,8 @@ class NovAuthSDK {
               operationId: operation.id,
               version: this.VERSION,
               notificationProvider: this.NOTIFICATION_PROVIDER,
-              origin: this.options.server.origin,
-              webhook: this.options.server.webhook,
+              origin: this.options.app.origin,
+              webhook: this.options.app.webhook,
               attestationRequest: registrationOptions,
             })
           )
@@ -114,22 +122,35 @@ class NovAuthSDK {
     try {
       // verify pairing
       const regResult = await this.f2l.attestationResult(response.credential, {
-        rpId: this.options.server.origin,
+        rpId: this.options.app.origin,
         challenge: operation.data.challenge,
-        origin: this.options.server.origin,
+        origin: this.options.app.origin,
         factor: 'either',
       }) // will throw on error
 
       const authnrData = regResult.authnrData
       // API: verify pairing
-      // TODO: implement the API
+      const data: APIDeviceUpdateRequest = {
+        action: 'pair_verify',
+        pairing: {
+          appId: this.options.app.id,
+          userId: operation.data.userId,
+        },
+      }
+      const apiResponse: APIDeviceUpdateResponse = await axios.put(
+        `${this.NOVAUTH_API_URL}/devices/${response.deviceId}`,
+        data
+      )
+
+      if (apiResponse.status !== 200)
+        throw 'error from the NovAuth API: ' + apiResponse.message
 
       // return the pairing data
       return {
         status: 'verified',
         userID: operation.data.userId,
         device: {
-          id: response.id,
+          id: response.deviceId,
         },
         credential: {
           id: Base64Url.encode(authnrData.get('credId')),
@@ -151,7 +172,20 @@ class NovAuthSDK {
   private async pairingConfirm(pairing: Pairing): Promise<Pairing> {
     try {
       // API: confirm pairing
-      // TODO: implement the API
+      const data: APIDeviceUpdateRequest = {
+        action: 'pair_confirm',
+        pairing: {
+          appId: this.options.app.id,
+          userId: pairing.userID,
+        },
+      }
+      const apiResponse: APIDeviceUpdateResponse = await axios.put(
+        `${this.NOVAUTH_API_URL}/devices/${pairing.device.id}`,
+        data
+      )
+
+      if (apiResponse.status !== 200)
+        throw 'error from the NovAuth API: ' + apiResponse.message
 
       // return the pairing data
       const { status, ...pairingMerge } = pairing
@@ -177,10 +211,10 @@ class NovAuthSDK {
        * a push authentication can be requested only if
        * - a pairing has been confirmed: the device can be used as an authentication factor
        * - a pairing has been verified: the device needs to be confirmed by performing the first successful authentication
-       *  */ 
+       *  */
       if (pairing.status !== 'confirmed' && pairing.status !== 'verified')
         throw 'The pairing was not confirmed or the confirm process already started.'
-      
+
       const authenticationOptions = await this.f2l.assertionOptions()
       authenticationOptions.allowCredentials = [
         {
@@ -191,7 +225,18 @@ class NovAuthSDK {
 
       // API: push notification request
       // provide assertion and deviceID
-      // TODO:
+      const data: APIPushAuthenticationRequest = {
+        payload: {
+          assertionRequest: authenticationOptions,
+        },
+      }
+      const apiResponse: APIDeviceUpdateResponse = await axios.put(
+        `${this.NOVAUTH_API_URL}/devices/${pairing.device.id}`,
+        data
+      )
+
+      if (apiResponse.status !== 200)
+        throw 'error from the NovAuth API: ' + apiResponse.message
 
       // if this is the first time a push authentication is requested for the user, edit the pairing status
       const { status, ...pairingMerge } = pairing
@@ -224,9 +269,9 @@ class NovAuthSDK {
   ): Promise<Pairing> {
     try {
       const authnResult = await this.f2l.assertionResult(response.credential, {
-        rpId: this.options.server.origin,
+        rpId: this.options.app.origin,
         challenge: operation.data.challenge,
-        origin: this.options.server.origin,
+        origin: this.options.app.origin,
         factor: 'either',
         prevCounter: operation.data.pairing.credential.counter,
         publicKey: operation.data.pairing.credential.publicKey,
