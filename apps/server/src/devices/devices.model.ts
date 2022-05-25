@@ -1,14 +1,7 @@
 import mongoose from 'mongoose'
 import type { Query, Document, Model } from 'mongoose'
-import {v4 as uuidv4} from 'uuid'
-
-type PairingStatus = 'PENDING' | 'CONFIRMED' | 'VERIFIED'
-
-interface Pairing {
-  status: PairingStatus
-  appId: string
-  userId: string
-}
+import { v4 as uuidv4 } from 'uuid'
+import { Pairing, DeviceID } from '@novauth/server-common'
 
 /**
  * The Device type used in the data model
@@ -16,12 +9,17 @@ interface Pairing {
 interface Device {
   // the id is present when querying the db but not when creating new documents
   _id?: string
-  id: string // id exposed by the api
+  id: DeviceID // id exposed by the api
   expoPushToken: string
   pairings: Pairing[]
 }
 
-const schema = new mongoose.Schema<Device, Model<Device, DeviceQueryHelpers>, any, any>({
+const schema = new mongoose.Schema<
+  Device,
+  Model<Device, DeviceQueryHelpers>,
+  any,
+  any
+>({
   id: { type: String, required: true },
   expoPushToken: { type: String, required: true },
 })
@@ -62,4 +60,4 @@ async function makeDevice(data: {
 }
 
 export default model
-export { Device, makeDevice, Pairing, PairingStatus }
+export { Device, makeDevice }

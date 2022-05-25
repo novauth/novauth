@@ -1,10 +1,7 @@
 import notification from '../core/notification.js'
-import DeviceModel, {
-  makeDevice,
-  Device,
-  Pairing,
-  PairingStatus,
-} from './devices.model.js'
+import DeviceModel, { makeDevice, Device } from './devices.model.js'
+
+import { Pairing, PairingStatus } from '@novauth/server-common'
 
 type DeviceCreateInput = Omit<Device, '_id' | 'id'>
 
