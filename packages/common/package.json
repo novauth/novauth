@@ -16,7 +16,7 @@
     "url": "https://epmatt.com"
   },
   "homepage": "https://github.com/novauth/novauth/tree/main/packages/server-common#readme",
-  "license": "GPL-3.0",
+  "license": "MIT",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
