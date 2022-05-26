@@ -1,4 +1,4 @@
-import PairingOperation from './PairingOperation'
+import PairingOperation from './PairingOperation.js'
 
 interface PairingIntent {
   operation: PairingOperation

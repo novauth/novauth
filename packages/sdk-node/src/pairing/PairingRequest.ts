@@ -1,5 +1,5 @@
 import { PublicKeyCredentialCreationOptions } from 'fido2-lib'
-import { OperationID } from '../Operation'
+import { OperationID } from '../Operation.js'
 
 type Version = '0.0.0'
 

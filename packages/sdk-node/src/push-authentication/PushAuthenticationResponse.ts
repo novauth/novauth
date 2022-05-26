@@ -1,6 +1,6 @@
 import { AssertionResult } from 'fido2-lib'
-import { OperationID } from '../Operation'
-import { DeviceID } from '../pairing/Pairing'
+import { OperationID } from '../Operation.js'
+import { DeviceID } from '../pairing/Pairing.js'
 
 interface PushAuthenticationResponse {
   operationId: OperationID

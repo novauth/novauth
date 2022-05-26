@@ -1,5 +1,5 @@
-import Operation from '../Operation'
-import Pairing from '../pairing/Pairing'
+import Operation from '../Operation.js'
+import Pairing from '../pairing/Pairing.js'
 
 interface PushAuthenticationOperation
   extends Operation<{

@@ -1,4 +1,4 @@
-import Operation from '../Operation'
+import Operation from '../Operation.js'
 
 interface PairingOperation
   extends Operation<{ userId: string; challenge: string }> {
