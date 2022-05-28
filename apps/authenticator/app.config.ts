@@ -29,7 +29,10 @@ async function setCustomAssetStatements(
 
 const withAssetStatementMetadata: ConfigPlugin = (config) => {
   return withAndroidManifest(config, async (config) => {
-    config.modResults = await setCustomAssetStatements(config, config.modResults)
+    config.modResults = await setCustomAssetStatements(
+      config,
+      config.modResults
+    )
     return config
   })
 }
@@ -75,6 +78,7 @@ export default {
     supportsTablet: true,
   },
   android: {
+    googleServicesFile: './google-services.json',
     adaptiveIcon: {
       foregroundImage: './assets/adaptive-icon.png',
       backgroundColor: '#FFFFFF',

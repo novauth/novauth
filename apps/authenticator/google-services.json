@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "469481458684",
+    "project_id": "novauth-8ae3b",
+    "storage_bucket": "novauth-8ae3b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:469481458684:android:6fa7cd45066aab09f58079",
+        "android_client_info": {
+          "package_name": "com.novauth.authenticator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "469481458684-qnk1qgsreg4bfcs448ic5b2pmbe7is8s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.novauth.authenticator",
+            "certificate_hash": "b513b7b66a10b0fe2ec7c92c1a6af4e7dea4bcc5"
+          }
+        },
+        {
+          "client_id": "469481458684-mo34rh4moomsnd33n8kksqjpnrcq15fu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBm-OCJwDqQdarKyEMcSBBuYZ2jmvPAmP8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "469481458684-mo34rh4moomsnd33n8kksqjpnrcq15fu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
