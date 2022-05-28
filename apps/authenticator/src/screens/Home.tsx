@@ -1,17 +1,16 @@
 import { StackScreenProps } from '@react-navigation/stack'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { RootStackNavigatorParamList } from '../navigation/RootStackNavigator'
 import { FAB } from '@rneui/base'
 
 type HomeProps = StackScreenProps<RootStackNavigatorParamList, 'Home'>
 
-function Home({}: HomeProps) {
+function Home({ navigation }: HomeProps) {
   return (
     <View style={styles.container}>
-      <Text>NovAuth: Securing the Modern Web</Text>
       <FAB
         visible={true}
-        onPress={() => {}}
+        onPress={() => navigation.navigate('QRScan')}
         icon={{ name: 'add', color: 'white' }}
         color='blue'
         placement='right'
