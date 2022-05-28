@@ -1,13 +1,17 @@
 import { StackScreenProps } from '@react-navigation/stack'
 import { StyleSheet, View } from 'react-native'
 import { RootStackNavigatorParamList } from '../navigation/RootStackNavigator'
-import { FAB } from '@rneui/base'
+import { FAB, Text } from '@rneui/base'
+import { useDataContext } from '../contexts/DataContext'
 
 type HomeProps = StackScreenProps<RootStackNavigatorParamList, 'Home'>
 
 function Home({ navigation }: HomeProps) {
+  const { loading, pairings } = useDataContext()
+  const pairingsArray = Object.values(pairings)
   return (
     <View style={styles.container}>
+      {pairingsArray.length===0 &&  <Text>No accounts paired with this device.</Text>}
       <FAB
         visible={true}
         onPress={() => navigation.navigate('QRScan')}
