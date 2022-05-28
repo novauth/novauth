@@ -1,4 +1,5 @@
-import { DeviceID, Pairing } from '../../devices'
+import { DeviceID } from '../../devices'
+import { Pairing } from '../../pairing'
 import APIResponse from '../base/APIResponse'
 
 interface APIDeviceUpdateResponseData {

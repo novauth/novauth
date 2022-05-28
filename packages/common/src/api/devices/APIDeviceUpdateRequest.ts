@@ -1,4 +1,4 @@
-import { Pairing } from '../../devices'
+import { Pairing } from '../../pairing'
 
 interface APIDeviceUpdateRequest {
   action: 'pair_verify' | 'pair_confirm'

@@ -1,5 +1,8 @@
 export * from './api'
 export * from './devices'
+export * from './pairing'
+export * from './push-authentication'
+export { default as Operation, OperationID } from './Operation.js'
 /** Custom type to replace the typoe of some properties with another type
  *  Example:
  * ```
