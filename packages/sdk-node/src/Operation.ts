@@ -1,4 +1,4 @@
-import uuid from 'uuid'
+import { v4 } from 'uuid'
 
 type OperationID = string
 
@@ -8,7 +8,7 @@ interface Operation<T> {
 }
 
 function generateOperationID(): string {
-  return uuid.v4()
+  return v4()
 }
 
 function Operation<T>(data: T): Operation<T> {
