@@ -23,7 +23,7 @@ async function init() {
  * @param expoPushToken
  */
 async function registerDevice(expoPushToken: string) {
-  const response = await axios.put<
+  const response = await axios.post<
     any,
     AxiosResponse<APIDeviceRegistrationResponse | APIError>,
     APIDeviceRegistrationRequest
