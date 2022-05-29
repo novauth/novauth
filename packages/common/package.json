@@ -14,7 +14,7 @@
     "email": "info@epmatt.com",
     "url": "https://epmatt.com"
   },
-  "homepage": "https://github.com/novauth/novauth/tree/main/packages/server-common#readme",
+  "homepage": "https://github.com/novauth/novauth/tree/main/packages/common#readme",
   "license": "MIT",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

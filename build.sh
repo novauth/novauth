@@ -1,6 +1,6 @@
 #!/bin/bash
 
-npm --prefix packages/server-common run build;
+npm --prefix packages/common run build;
 
 if [[ $NODE_ENV != "production" || $NODE_ENV == "production" && $PROCESS == "server" ]]
 then

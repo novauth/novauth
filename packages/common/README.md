@@ -1,11 +1,11 @@
-# `push-server-common`
+# `push-common`
 
 > TODO: description
 
 ## Usage
 
 ```
-const pushServerCommon = require('push-server-common');
+const pushServerCommon = require('push-common');
 
 // TODO: DEMONSTRATE API
 ```
