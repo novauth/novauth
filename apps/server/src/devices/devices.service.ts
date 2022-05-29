@@ -139,7 +139,7 @@ async function postDevice(
 ): Promise<ResultPostDevice> {
   // the request includes device creation
   // the request does not contain a device id
-  const deviceItem = DeviceModel.findOne({
+  const deviceItem = await DeviceModel.findOne({
     expoPushToken: device.expoPushToken,
   })
   if (deviceItem !== null) return { result: 'ERROR_DEVICE_ALREADY_EXISTS' }
