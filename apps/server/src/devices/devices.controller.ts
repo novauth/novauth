@@ -59,9 +59,9 @@ async function putDevice(
 
 async function postDevice(
   req: express.Request<any, any, APIDeviceRegistrationRequest>,
-  res: express.Response<APIDeviceRegistrationResponse>,
+  res: express.Response,
   next: express.NextFunction
-): Promise<express.Response | undefined> {
+): Promise<express.Response<APIDeviceRegistrationResponse> | undefined> {
   try {
     const result = await postDeviceFromService(req.body.device)
     /* eslint-disable no-fallthrough */
@@ -99,14 +99,13 @@ async function postDevice(
 }
 
 async function pushNotificationToDevice(
-  req: express.Request,
-  res: express.Response<APIPushAuthenticationResponse>,
+  req: express.Request<any, any, APIPushAuthenticationRequest>,
+  res: express.Response,
   next: express.NextFunction
 ): Promise<express.Response<APIPushAuthenticationResponse> | undefined> {
-  const body: APIPushAuthenticationRequest = req.body
   const result = await pushNotificationToDeviceFromService(
     req.params.deviceId,
-    body.payload
+    req.body.payload
   )
   /* eslint-disable no-fallthrough */
   switch (result.result) {

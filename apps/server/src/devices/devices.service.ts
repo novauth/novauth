@@ -1,7 +1,7 @@
 import notification from '../core/notification.js'
 import DeviceModel, { makeDevice, Device } from './devices.model.js'
 
-import { Pairing, PairingStatus } from '@novauth/common'
+import { DeviceID, Pairing, PairingStatus } from '@novauth/common'
 
 type DeviceCreateInput = Omit<Device, '_id' | 'id' | 'pairings'>
 
@@ -47,7 +47,7 @@ async function createDevice(data: DeviceCreateInput): Promise<Device> {
   return item
 }
 
-async function addPairing(deviceId: string, pairing: Pairing) {
+async function addPairing(deviceId: DeviceID, pairing: Pairing) {
   await DeviceModel.updateOne(
     { id: deviceId },
     { $addToSet: { pairings: [pairing] } }
@@ -55,7 +55,7 @@ async function addPairing(deviceId: string, pairing: Pairing) {
 }
 
 async function updatePairingStatus(
-  deviceId: string,
+  deviceId: DeviceID,
   appId: string,
   userId: string,
   status: PairingStatus
@@ -74,7 +74,10 @@ async function updatePairingStatus(
 
 async function putDevice(
   action: string,
-  { deviceId, pairing }: { deviceId: string; pairing: Omit<Pairing, 'status'> }
+  {
+    deviceId,
+    pairing,
+  }: { deviceId: DeviceID; pairing: Omit<Pairing, 'status'> }
 ): Promise<ResultPutDevice> {
   const deviceItem = await DeviceModel.findOne().byId(deviceId).exec()
 
@@ -156,7 +159,7 @@ async function postDevice(
 }
 
 async function pushNotificationToDevice(
-  deviceId: string,
+  deviceId: DeviceID,
   payload: any
 ): Promise<ResultPushNotificationToDevice> {
   // retrieve expo token from db
