@@ -1,13 +1,11 @@
 import notification from '../core/notification.js'
 import DeviceModel, { makeDevice, Device } from './devices.model.js'
-
 import {
   DeviceID,
   Pairing,
   PairingStatus,
   PushAuthenticationPayload,
 } from '@novauth/common'
-import { DeviceID, Pairing, PairingStatus } from '@novauth/common'
 
 type DeviceCreateInput = Omit<Device, '_id' | 'id' | 'pairings'>
 
