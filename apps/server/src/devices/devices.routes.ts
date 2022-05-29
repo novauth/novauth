@@ -11,6 +11,6 @@ const router = express.Router()
 
 // TODO: authorization
 router.put('/:deviceId', putDevice)
-router.post(':deviceId/push', pushNotificationToDevice)
+router.post('/:deviceId/push', pushNotificationToDevice)
 router.post('/', postDevice)
 export default router
