@@ -6,6 +6,10 @@ import {
 } from '@expo/config-plugins'
 import { ExpoConfig } from '@expo/config-types'
 
+import dotenv from 'dotenv'
+
+dotenv.config()
+
 const { addMetaDataItemToMainApplication, getMainApplicationOrThrow } =
   AndroidConfig.Manifest
 const { setStringItem } = AndroidConfig.Strings
@@ -89,4 +93,7 @@ export default {
     favicon: './assets/favicon.png',
   },
   plugins: [withAssetStatementMetadata, withAssetStatementsStringResource],
+  extra: {
+    API_URL: process.env.NOVAUTH_SERVER_BASE_URL,
+  },
 }
