@@ -6,3 +6,5 @@ export { default as APIDeviceUpdateRequest } from './devices/APIDeviceUpdateRequ
 export { default as APIDeviceUpdateResponse } from './devices/APIDeviceUpdateResponse'
 export { default as APIPushAuthenticationRequest } from './devices/APIPushAuthenticationRequest'
 export { default as APIPushAuthenticationResponse } from './devices/APIPushAuthenticationResponse'
+export { default as APIDeviceRegistrationRequest } from './devices/APIDeviceRegistrationRequest'
+export { default as APIDeviceRegistrationResponse } from './devices/APIDeviceRegistrationResponse'

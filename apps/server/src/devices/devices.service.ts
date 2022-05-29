@@ -3,7 +3,7 @@ import DeviceModel, { makeDevice, Device } from './devices.model.js'
 
 import { Pairing, PairingStatus } from '@novauth/common'
 
-type DeviceCreateInput = Omit<Device, '_id' | 'id'>
+type DeviceCreateInput = Omit<Device, '_id' | 'id' | 'pairings'>
 
 /**
  * The Device type returned during normal interaction.
@@ -132,33 +132,24 @@ async function putDevice(
 }
 
 async function postDevice(
-  device: DeviceCreateInput,
-  pairing: Omit<Pairing, 'status'>
+  device: DeviceCreateInput
 ): Promise<ResultPostDevice> {
-  // the request includes both device creation and pairing of the device with an app
+  // the request includes device creation
   // the request does not contain a device id
   const deviceItem = DeviceModel.findOne({
     expoPushToken: device.expoPushToken,
   })
-  const pairingItem: Pairing = {
-    status: 'PENDING',
-    appId: pairing.appId,
-    userId: pairing.userId,
-  }
   if (deviceItem !== null) return { result: 'ERROR_DEVICE_ALREADY_EXISTS' }
   else {
     // create device, storing the provided access token
-
     const deviceItem = await createDevice({
       ...device,
-      pairings: [pairingItem],
     })
     // return the pairing information
     return {
-      result: 'OK_CREATED_AND_PAIRED',
+      result: 'OK_CREATED',
       data: {
         deviceId: deviceItem.id,
-        pairing: pairingItem,
       },
     }
   }
@@ -200,10 +191,9 @@ type ResultPushNotificationToDevice =
 
 type ResultPostDevice =
   | {
-      result: 'OK_CREATED_AND_PAIRED'
+      result: 'OK_CREATED'
       data: {
         deviceId: string
-        pairing: Pairing
       }
     }
   | {

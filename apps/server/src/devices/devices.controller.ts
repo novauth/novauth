@@ -10,6 +10,8 @@ import {
   makeControllerError,
 } from '../core/utils.js'
 import {
+  APIDeviceRegistrationRequest,
+  APIDeviceRegistrationResponse,
   APIDeviceUpdateRequest,
   APIDeviceUpdateResponse,
   APIPushAuthenticationRequest,
@@ -17,15 +19,14 @@ import {
 } from '@novauth/common'
 
 async function putDevice(
-  req: express.Request,
+  req: express.Request<any, any, APIDeviceUpdateRequest>,
   res: express.Response,
   next: express.NextFunction
 ): Promise<express.Response<APIDeviceUpdateResponse> | undefined> {
   try {
-    const body: APIDeviceUpdateRequest = req.body
-    const result = await putDeviceFromService(body.action, {
+    const result = await putDeviceFromService(req.body.action, {
       deviceId: req.params.deviceId,
-      pairing: body.pairing,
+      pairing: req.body.pairing,
     })
     /* eslint-disable no-fallthrough */
     switch (result.result) {
@@ -57,18 +58,15 @@ async function putDevice(
 }
 
 async function postDevice(
-  req: express.Request,
-  res: express.Response,
+  req: express.Request<any, any, APIDeviceRegistrationRequest>,
+  res: express.Response<APIDeviceRegistrationResponse>,
   next: express.NextFunction
 ): Promise<express.Response | undefined> {
   try {
-    const result = await postDeviceFromService(
-      req.body.device,
-      req.body.pairing
-    )
+    const result = await postDeviceFromService(req.body.device)
     /* eslint-disable no-fallthrough */
     switch (result.result) {
-      case 'OK_CREATED_AND_PAIRED':
+      case 'OK_CREATED':
         return setResponse(
           res,
           makeApiResponse(
