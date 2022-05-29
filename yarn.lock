@@ -3310,9 +3310,9 @@
     warn-once "^0.1.0"
 
 "@rneui/base@^4.0.0-rc.3":
-  version "4.0.0-rc.3"
-  resolved "https://registry.yarnpkg.com/@rneui/base/-/base-4.0.0-rc.3.tgz#b3ffb4f369ac0917ea1c7ae42011aaec1acb7fcf"
-  integrity sha512-FYMIg7UGrVGzP+cC5Yo7rsRyB6qNKa9QSGUAhxnmZ+PDjwYXWamtRRQfx/Lr2UtRMbcU3r5NQMOyEXmUip9JGw==
+  version "4.0.0-rc.4"
+  resolved "https://registry.yarnpkg.com/@rneui/base/-/base-4.0.0-rc.4.tgz#5dcf2c7002d729234690688f4d334ac2e63c3872"
+  integrity sha512-X2L4UJkrMrhd35Jqdk5zf8zHXOFBu6jOo76lUlHxoiu12S/3Q0XKsB6nJHRonG3IiAE0epCux7Px98K2n66bPA==
   dependencies:
     "@types/react-native-vector-icons" "^6.4.10"
     color "^3.2.1"
