@@ -1,4 +1,5 @@
 export * from './api'
+export * from './app-api'
 export * from './devices'
 export * from './pairing'
 export * from './push-authentication'
