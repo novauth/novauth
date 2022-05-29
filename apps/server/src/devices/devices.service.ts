@@ -1,6 +1,12 @@
 import notification from '../core/notification.js'
 import DeviceModel, { makeDevice, Device } from './devices.model.js'
 
+import {
+  DeviceID,
+  Pairing,
+  PairingStatus,
+  PushAuthenticationPayload,
+} from '@novauth/common'
 import { DeviceID, Pairing, PairingStatus } from '@novauth/common'
 
 type DeviceCreateInput = Omit<Device, '_id' | 'id' | 'pairings'>
@@ -160,7 +166,7 @@ async function postDevice(
 
 async function pushNotificationToDevice(
   deviceId: DeviceID,
-  payload: any
+  payload: PushAuthenticationPayload
 ): Promise<ResultPushNotificationToDevice> {
   // retrieve expo token from db
   const device: Device = await DeviceModel.findOne().byId(deviceId).exec()

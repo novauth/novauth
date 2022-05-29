@@ -1,12 +1,10 @@
-import { PublicKeyCredentialRequestOptions } from 'fido2-lib'
+import PushAuthenticationPayload from '../../push-authentication/PushAuthenticationPayload'
 
 /**
  * The push authentication request sent to the API
  */
 interface APIPushAuthenticationRequest {
-  payload: {
-    assertionRequest: PublicKeyCredentialRequestOptions
-  }
+  payload: PushAuthenticationPayload
 }
 
 export default APIPushAuthenticationRequest
