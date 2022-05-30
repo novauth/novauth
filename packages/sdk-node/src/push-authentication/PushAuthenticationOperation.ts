@@ -1,4 +1,4 @@
-import Operation from '../Operation.js'
+import { Operation } from '@novauth/common'
 import Pairing from '../pairing/Pairing.js'
 
 interface PushAuthenticationOperation

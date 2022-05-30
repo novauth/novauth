@@ -1,4 +1,4 @@
-import Operation from '../Operation.js'
+import {Operation} from '@novauth/common'
 
 interface PairingOperation
   extends Operation<{ userId: string; challenge: string }> {

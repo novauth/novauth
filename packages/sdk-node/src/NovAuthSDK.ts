@@ -3,9 +3,8 @@ import { Fido2Lib } from 'fido2-lib'
 import QRCode from 'qrcode'
 import Base64Url from 'base64url'
 import PairingIntent from './pairing/PairingIntent.js'
-import PairingRequest from './pairing/PairingRequest.js'
-import PairingResponse from './pairing/PairingResponse.js'
-import PushAuthenticationResponse from './push-authentication/PushAuthenticationResponse.js'
+import { compress, PairingResponse } from '@novauth/common'
+import { PushAuthenticationResponse } from '@novauth/common'
 import PushAuthenticationIntent from './push-authentication/PushAuthenticationIntent.js'
 import PairingOperation from './pairing/PairingOperation.js'
 import PushAuthenticationOperation from './push-authentication/PushAuthenticationOperation.js'
@@ -93,7 +92,7 @@ class NovAuthSDK {
         operation,
         qrCode: await QRCode.toDataURL(
           JSON.stringify(
-            PairingRequest.compress({
+            compress({
               operationId: operation.id,
               version: this.VERSION,
               notificationProvider: this.NOTIFICATION_PROVIDER,

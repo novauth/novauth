@@ -1,5 +1,5 @@
 export { default as Pairing } from './Pairing.js'
 export { default as PairingIntnet } from './PairingIntent.js'
 export { default as PairingOperation } from './PairingOperation.js'
-export { default as PairingRequest } from './PairingRequest.js'
+export { PairingRequest } from '@novauth/common'
 export { default as PairingResponse } from './PairingResponse.js'

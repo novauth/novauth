@@ -1,6 +1,6 @@
 import { AttestationResult } from 'fido2-lib'
 import { DeviceID } from './Pairing.js'
-import { OperationID } from '../Operation.js'
+import { OperationID } from '@novauth/common'
 
 interface PairingResponse {
   operationID: OperationID
