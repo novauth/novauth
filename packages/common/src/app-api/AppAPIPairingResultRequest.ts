@@ -35,6 +35,7 @@ function deserializeAppAPIPairingResultRequest(
 
 export default AppAPIPairingResultRequest
 export {
+  SerializedAppAPIPairingResultRequest,
   serializeAppAPIPairingResultRequest,
   deserializeAppAPIPairingResultRequest,
 }

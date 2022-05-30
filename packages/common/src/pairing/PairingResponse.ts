@@ -67,6 +67,7 @@ function deserializeAttestationResult(
 
 export default PairingResponse
 export {
+  SerializedAttestationResult,
   SerializedPairingResponse,
   serializePairingResponse,
   deserializePairingResponse,
