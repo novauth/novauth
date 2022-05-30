@@ -1,6 +1,6 @@
 {
   "name": "@novauth/sdk-node",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "NovAuth SDK for Node.js",
   "type": "module",
   "keywords": [
