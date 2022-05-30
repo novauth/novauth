@@ -6,7 +6,9 @@ import {
   base64decode,
   base64encode,
   compress,
+  deserializePairingResponse,
   PairingResponse,
+  SerializedPairingResponse,
 } from '@novauth/common'
 import { PushAuthenticationResponse } from '@novauth/common'
 import PushAuthenticationIntent from './push-authentication/PushAuthenticationIntent.js'
@@ -122,11 +124,12 @@ class NovAuthSDK {
    */
   public async pairingVerify(
     operation: PairingOperation,
-    response: PairingResponse
+    response: SerializedPairingResponse
   ): Promise<Pairing> {
     try {
+      const deserialized = deserializePairingResponse(response)
       // verify pairing
-      const regResult = await this.f2l.attestationResult(response.credential, {
+      const regResult = await this.f2l.attestationResult(deserialized.credential, {
         rpId: this.options.app.origin,
         challenge: operation.data.challenge,
         origin: this.options.app.origin,
@@ -143,7 +146,7 @@ class NovAuthSDK {
         },
       }
       const apiResponse: APIDeviceUpdateResponse = await axios.put(
-        `${this.NOVAUTH_API_URL}/devices/${response.deviceId}`,
+        `${this.NOVAUTH_API_URL}/devices/${deserialized.deviceId}`,
         data
       )
 
@@ -155,7 +158,7 @@ class NovAuthSDK {
         'verified',
         operation.data.userId,
         {
-          id: response.deviceId,
+          id: deserialized.deviceId,
         },
         {
           id: authnrData.get('credId'),

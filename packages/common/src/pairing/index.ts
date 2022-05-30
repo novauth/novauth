@@ -6,4 +6,5 @@ export {
   PairingRequestCompressed,
 } from './PairingRequest.js'
 export { default as PairingResponse } from './PairingResponse.js'
+export * from './PairingResponse.js'
 export { default as PairingStatus } from './PairingStatus.js'
