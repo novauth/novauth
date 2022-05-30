@@ -1,6 +1,6 @@
 {
   "name": "@novauth/sdk-node",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "NovAuth SDK for Node.js",
   "type": "module",
   "keywords": [
@@ -44,7 +44,7 @@
     "typescript": "^4.6.4"
   },
   "dependencies": {
-    "@novauth/common": "^0.1.6",
+    "@novauth/common": "^0.1.8",
     "axios": "^0.27.2",
     "fido2-lib": "^3.1.5",
     "qrcode": "^1.5.0",
