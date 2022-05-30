@@ -6,6 +6,7 @@ type Version = '0.0.0'
 type NotificationProvider = 'novauth'
 
 interface PairingRequest {
+  appId: string
   operationId: OperationID
   version: Version
   notificationProvider: NotificationProvider
@@ -15,6 +16,7 @@ interface PairingRequest {
 }
 
 interface PairingRequestCompressed {
+  p: string
   i: OperationID
   v: Version
   n: NotificationProvider
@@ -25,6 +27,7 @@ interface PairingRequestCompressed {
 
 function compress(request: PairingRequest): PairingRequestCompressed {
   return {
+    p: request.appId,
     i: request.operationId,
     v: request.version,
     n: request.notificationProvider,
@@ -36,6 +39,7 @@ function compress(request: PairingRequest): PairingRequestCompressed {
 
 function decompress(request: PairingRequestCompressed): PairingRequest {
   return {
+    appId: request.p,
     operationId: request.i,
     version: request.v,
     notificationProvider: request.n,

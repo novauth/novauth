@@ -98,6 +98,7 @@ class NovAuthSDK {
         qrCode: await QRCode.toDataURL(
           JSON.stringify(
             compress({
+              appId: this.options.app.id,
               operationId: operation.id,
               version: this.VERSION,
               notificationProvider: this.NOTIFICATION_PROVIDER,
