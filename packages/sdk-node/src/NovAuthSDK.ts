@@ -131,9 +131,22 @@ class NovAuthSDK {
   ): Promise<SerializedPairing> {
     try {
       const deserialized = deserializePairingResponse(response)
+
+      // HACK: fix issue with non-compliant fido2-lib code for origin check
+      const clientDataJSON = JSON.parse(
+        deserialized.credential.response.clientDataJSON
+      )
+      clientDataJSON.origin = this.options.app.origin
       // verify pairing
       const regResult = await this.f2l.attestationResult(
-        deserialized.credential,
+        {
+          ...deserialized.credential,
+          response: {
+            clientDataJSON: JSON.stringify(clientDataJSON),
+            attestationObject:
+              deserialized.credential.response.attestationObject,
+          },
+        },
         {
           rpId: this.options.app.origin,
           challenge: operation.data.challenge,
@@ -151,10 +164,13 @@ class NovAuthSDK {
           userId: operation.data.userId,
         },
       }
-      const apiResponse: APIDeviceUpdateResponse = await axios.put(
-        `${this.NOVAUTH_API_URL}/devices/${deserialized.deviceId}`,
-        data
-      )
+      const apiResponse: APIDeviceUpdateResponse = (
+        await axios({
+          url: `${this.NOVAUTH_API_URL}/devices/${deserialized.deviceId}`,
+          method: 'put',
+          data,
+        })
+      ).data
 
       if (apiResponse.status !== 200)
         throw 'error from the NovAuth API: ' + apiResponse.message
