@@ -226,6 +226,11 @@ class NovAuthSDK {
       // provide assertion and deviceID
       const data: APIPushAuthenticationRequest = {
         payload: {
+          app: {
+            name: this.options.app.name,
+            origin: this.options.app.origin,
+            webhook: this.options.app.webhook,
+          },
           assertionRequest: authenticationOptions,
         },
       }
