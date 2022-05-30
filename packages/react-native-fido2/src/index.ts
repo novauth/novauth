@@ -29,7 +29,9 @@ async function attestationRequest({
   authenticatorSelection,
   attestation = 'none',
   extensions = {},
-}: PublicKeyCredentialCreationOptions): Promise<PublicKeyCredential> {
+}: PublicKeyCredentialCreationOptions): Promise<
+  PublicKeyCredential & { response: AuthenticatorAttestationResponse }
+> {
   // Android support only
   checkPlatform()
 
