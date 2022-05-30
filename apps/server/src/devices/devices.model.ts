@@ -22,6 +22,13 @@ const schema = new mongoose.Schema<
 >({
   id: { type: String, required: true },
   expoPushToken: { type: String, required: true },
+  pairings: [
+    new mongoose.Schema({
+      status: { type: String, required: true },
+      appId: { type: String, required: true },
+      userId: { type: String, required: true },
+    }),
+  ],
 })
 
 interface DeviceQueryHelpers {
