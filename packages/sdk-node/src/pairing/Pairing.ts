@@ -1,4 +1,4 @@
-import { base64encode } from '@novauth/common'
+import { base64decode, base64encode } from '@novauth/common'
 
 type DeviceID = string
 
@@ -14,35 +14,51 @@ interface Pairing {
     id: DeviceID
   }
   credential: {
+    id: ArrayBuffer
+    counter: number
+    publicKey: string
+  }
+}
+
+interface SerializedPairing {
+  status: PairingStatus
+  userID: string
+  device: {
+    id: DeviceID
+  }
+  credential: {
     id: string
     counter: number
     publicKey: string
   }
 }
 
-function Pairing(
-  status: PairingStatus,
-  userID: string,
-  device: {
-    id: DeviceID
-  },
-  credential: {
-    id: Buffer
-    counter: number
-    publicKey: string
-  }
-): Pairing {
+function serializePairing(a: Pairing): SerializedPairing {
   return {
-    status,
-    userID,
-    device,
+    status: a.status,
+    userID: a.userID,
+    device: a.device,
     credential: {
-      id: base64encode(credential.id),
-      counter: credential.counter,
-      publicKey: credential.publicKey,
+      id: base64encode(a.credential.id),
+      counter: a.credential.counter,
+      publicKey: a.credential.publicKey,
+    },
+  }
+}
+
+function deserializePairing(s: SerializedPairing): Pairing {
+  return {
+    status: s.status,
+    userID: s.userID,
+    device: s.device,
+    credential: {
+      id: base64decode(s.credential.id),
+      counter: s.credential.counter,
+      publicKey: s.credential.publicKey,
     },
   }
 }
 
 export default Pairing
+export { SerializedPairing, serializePairing, deserializePairing }
 export { DeviceID }

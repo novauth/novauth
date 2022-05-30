@@ -47,8 +47,8 @@ function serializeAttestationResult(
   a: AttestationResult
 ): SerializedAttestationResult {
   return {
-    id: a.id ? base64encode(Buffer.from(a.id)) : undefined,
-    rawId: a.rawId ? base64encode(Buffer.from(a.rawId)) : undefined,
+    id: a.id ? base64encode(a.id) : undefined,
+    rawId: a.rawId ? base64encode(a.rawId) : undefined,
     response: a.response,
     transports: a.transports,
   }

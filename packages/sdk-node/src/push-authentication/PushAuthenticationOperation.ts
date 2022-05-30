@@ -1,17 +1,17 @@
 import { Operation } from '@novauth/common'
-import Pairing from '../pairing/Pairing.js'
+import Pairing, { SerializedPairing } from '../pairing/Pairing.js'
 
 interface PushAuthenticationOperation
   extends Operation<{
     challenge: string
-    pairing: Pairing
+    pairing: SerializedPairing
   }> {
   type: 'push-auth'
 }
 
 function PushAuthenticationOperation(
   challenge: string,
-  pairing: Pairing
+  pairing: SerializedPairing
 ): PushAuthenticationOperation {
   return { ...Operation({ challenge, pairing }), type: 'push-auth' }
 }

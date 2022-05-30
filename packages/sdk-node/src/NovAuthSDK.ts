@@ -14,7 +14,10 @@ import { PushAuthenticationResponse } from '@novauth/common'
 import PushAuthenticationIntent from './push-authentication/PushAuthenticationIntent.js'
 import PairingOperation from './pairing/PairingOperation.js'
 import PushAuthenticationOperation from './push-authentication/PushAuthenticationOperation.js'
-import Pairing from './pairing/Pairing.js'
+import Pairing, {
+  SerializedPairing,
+  serializePairing,
+} from './pairing/Pairing.js'
 import User from './User.js'
 import axios from 'axios'
 import {
@@ -125,16 +128,19 @@ class NovAuthSDK {
   public async pairingVerify(
     operation: PairingOperation,
     response: SerializedPairingResponse
-  ): Promise<Pairing> {
+  ): Promise<SerializedPairing> {
     try {
       const deserialized = deserializePairingResponse(response)
       // verify pairing
-      const regResult = await this.f2l.attestationResult(deserialized.credential, {
-        rpId: this.options.app.origin,
-        challenge: operation.data.challenge,
-        origin: this.options.app.origin,
-        factor: 'either',
-      }) // will throw on error
+      const regResult = await this.f2l.attestationResult(
+        deserialized.credential,
+        {
+          rpId: this.options.app.origin,
+          challenge: operation.data.challenge,
+          origin: this.options.app.origin,
+          factor: 'either',
+        }
+      ) // will throw on error
 
       const authnrData = regResult.authnrData
       // API: verify pairing
@@ -154,18 +160,18 @@ class NovAuthSDK {
         throw 'error from the NovAuth API: ' + apiResponse.message
 
       // return the pairing data
-      return Pairing(
-        'verified',
-        operation.data.userId,
-        {
+      return serializePairing({
+        status: 'verified',
+        userID: operation.data.userId,
+        device: {
           id: deserialized.deviceId,
         },
-        {
+        credential: {
           id: authnrData.get('credId'),
           counter: authnrData.get('signCount'),
           publicKey: authnrData.get('credentialPublicKeyPem'),
-        }
-      )
+        },
+      })
     } catch (err) {
       throw 'The pairing cannot be verified: ' + err
     }
@@ -177,7 +183,9 @@ class NovAuthSDK {
    * @param pairing
    * @returns
    */
-  private async pairingConfirm(pairing: Pairing): Promise<Pairing> {
+  private async pairingConfirm(
+    pairing: SerializedPairing
+  ): Promise<SerializedPairing> {
     try {
       // API: confirm pairing
       const data: APIDeviceUpdateRequest = {
@@ -211,7 +219,7 @@ class NovAuthSDK {
    * @param deviceData
    */
   public async pushAuthenticationIntent(
-    pairing: Pairing
+    pairing: SerializedPairing
   ): Promise<PushAuthenticationIntent> {
     try {
       /**
@@ -253,7 +261,7 @@ class NovAuthSDK {
 
       // if this is the first time a push authentication is requested for the user, edit the pairing status
       const { status, ...pairingMerge } = pairing
-      const returnPairing: Pairing =
+      const returnPairing: SerializedPairing =
         status === 'verified'
           ? { status: 'confirm_pending', ...pairingMerge }
           : pairing
@@ -262,7 +270,7 @@ class NovAuthSDK {
       // sends a response
       return {
         operation: PushAuthenticationOperation(
-          base64encode(Buffer.from(authenticationOptions.challenge)),
+          base64encode(authenticationOptions.challenge),
           returnPairing
         ),
       }
@@ -279,7 +287,7 @@ class NovAuthSDK {
   public async pushAuthenticationVerify(
     operation: PushAuthenticationOperation,
     response: PushAuthenticationResponse
-  ): Promise<Pairing> {
+  ): Promise<SerializedPairing> {
     try {
       const authnResult = await this.f2l.assertionResult(response.credential, {
         rpId: this.options.app.origin,
