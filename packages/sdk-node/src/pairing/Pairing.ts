@@ -1,3 +1,5 @@
+import { base64encode } from '@novauth/common'
+
 type DeviceID = string
 
 /**
@@ -15,6 +17,30 @@ interface Pairing {
     id: string
     counter: number
     publicKey: string
+  }
+}
+
+function Pairing(
+  status: PairingStatus,
+  userID: string,
+  device: {
+    id: DeviceID
+  },
+  credential: {
+    id: Buffer
+    counter: number
+    publicKey: string
+  }
+): Pairing {
+  return {
+    status,
+    userID,
+    device,
+    credential: {
+      id: base64encode(credential.id),
+      counter: credential.counter,
+      publicKey: credential.publicKey,
+    },
   }
 }
 

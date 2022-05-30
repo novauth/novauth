@@ -1,9 +1,13 @@
 // TODO: full module documentation
 import { Fido2Lib } from 'fido2-lib'
 import QRCode from 'qrcode'
-import Base64Url from 'base64url'
 import PairingIntent from './pairing/PairingIntent.js'
-import { compress, PairingResponse } from '@novauth/common'
+import {
+  base64decode,
+  base64encode,
+  compress,
+  PairingResponse,
+} from '@novauth/common'
 import { PushAuthenticationResponse } from '@novauth/common'
 import PushAuthenticationIntent from './push-authentication/PushAuthenticationIntent.js'
 import PairingOperation from './pairing/PairingOperation.js'
@@ -86,7 +90,7 @@ class NovAuthSDK {
 
       const operation = PairingOperation(
         user.id,
-        Base64Url.toBase64(Buffer.from(registrationOptions.challenge))
+        Buffer.from(registrationOptions.challenge)
       )
       return {
         operation,
@@ -145,18 +149,18 @@ class NovAuthSDK {
         throw 'error from the NovAuth API: ' + apiResponse.message
 
       // return the pairing data
-      return {
-        status: 'verified',
-        userID: operation.data.userId,
-        device: {
+      return Pairing(
+        'verified',
+        operation.data.userId,
+        {
           id: response.deviceId,
         },
-        credential: {
-          id: Base64Url.encode(authnrData.get('credId')),
+        {
+          id: authnrData.get('credId'),
           counter: authnrData.get('signCount'),
           publicKey: authnrData.get('credentialPublicKeyPem'),
-        },
-      }
+        }
+      )
     } catch (err) {
       throw 'The pairing cannot be verified: ' + err
     }
@@ -217,7 +221,7 @@ class NovAuthSDK {
       const authenticationOptions = await this.f2l.assertionOptions()
       authenticationOptions.allowCredentials = [
         {
-          id: Base64Url.toBuffer(pairing.credential.id),
+          id: base64decode(pairing.credential.id),
           type: 'public-key',
         },
       ]
@@ -253,7 +257,7 @@ class NovAuthSDK {
       // sends a response
       return {
         operation: PushAuthenticationOperation(
-          Base64Url.toBase64(Buffer.from(authenticationOptions.challenge)),
+          base64encode(Buffer.from(authenticationOptions.challenge)),
           returnPairing
         ),
       }
