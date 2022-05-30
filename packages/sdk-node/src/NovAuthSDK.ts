@@ -24,6 +24,7 @@ import {
 interface NovAuthSDKOptions {
   app: {
     id: string
+    domain: string
     origin: string
     webhook: string
     name: string
@@ -62,7 +63,7 @@ class NovAuthSDK {
 
     this.f2l = new Fido2Lib({
       timeout: this.TIMEOUT_SECONDS,
-      rpId: options.app.origin,
+      rpId: options.app.domain,
       rpName: options.app.name,
       rpIcon: options.app.iconUrl,
       challengeSize: this.CHALLENGE_SIZE,
