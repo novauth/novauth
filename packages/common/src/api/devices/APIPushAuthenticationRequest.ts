@@ -1,4 +1,4 @@
-import PushAuthenticationPayload from '../../push-authentication/PushAuthenticationPayload'
+import PushAuthenticationPayload from '../../push-authentication/PushAuthenticationPayload.js'
 
 /**
  * The push authentication request sent to the API

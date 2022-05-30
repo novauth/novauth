@@ -1,1 +1,1 @@
-export { default as DeviceID } from './DeviceID'
+export { default as DeviceID } from './DeviceID.js'

@@ -1,6 +1,6 @@
-import { DeviceID } from '../../devices'
-import { Pairing } from '../../pairing'
-import APIResponse from '../base/APIResponse'
+import { DeviceID } from '../../devices/index.js'
+import { Pairing } from '../../pairing/index.js'
+import APIResponse from '../base/APIResponse.js'
 
 interface APIDeviceUpdateResponseData {
   deviceId: DeviceID

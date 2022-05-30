@@ -1,4 +1,4 @@
-import { Pairing } from '../../pairing'
+import { Pairing } from '../../pairing/index.js'
 
 interface APIDeviceUpdateRequest {
   action: 'pair_verify' | 'pair_confirm' | 'pair'

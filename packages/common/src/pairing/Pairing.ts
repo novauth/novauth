@@ -1,4 +1,4 @@
-import PairingStatus from './PairingStatus'
+import PairingStatus from './PairingStatus.js'
 
 interface Pairing {
   status: PairingStatus

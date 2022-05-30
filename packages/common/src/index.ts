@@ -1,8 +1,8 @@
-export * from './api'
-export * from './app-api'
-export * from './devices'
-export * from './pairing'
-export * from './push-authentication'
+export * from './api/index.js'
+export * from './app-api/index.js'
+export * from './devices/index.js'
+export * from './pairing/index.js'
+export * from './push-authentication/index.js'
 export { default as Operation, OperationID } from './Operation.js'
 /** Custom type to replace the typoe of some properties with another type
  *  Example:

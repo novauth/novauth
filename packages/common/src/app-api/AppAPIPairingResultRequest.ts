@@ -1,4 +1,4 @@
-import { PairingResponse } from '../pairing'
+import { PairingResponse } from '../pairing/index.js'
 
 interface AppAPIPairingResultRequest {
   type: 'pair_result'

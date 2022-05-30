@@ -1,4 +1,4 @@
-import APIResponse from '../base/APIResponse'
+import APIResponse from '../base/APIResponse.js'
 
 type APIPushAuthenticationResponse = APIResponse<{}>
 

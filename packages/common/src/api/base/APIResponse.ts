@@ -1,5 +1,5 @@
-import { NormalStatus } from "../Status"
-import BaseResponse from "./BaseResponse"
+import { NormalStatus } from "../Status.js"
+import BaseResponse from "./BaseResponse.js"
 
 interface APIResponse<T> extends BaseResponse {
   status: NormalStatus

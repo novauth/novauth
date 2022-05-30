@@ -1,5 +1,5 @@
-import { ErrorStatus } from '../Status'
-import BaseResponse from './BaseResponse'
+import { ErrorStatus } from '../Status.js'
+import BaseResponse from './BaseResponse.js'
 interface APIError extends BaseResponse {
   status: ErrorStatus
 }

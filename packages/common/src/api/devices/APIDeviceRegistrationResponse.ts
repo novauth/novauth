@@ -1,5 +1,5 @@
-import { DeviceID } from '../../devices'
-import APIResponse from '../base/APIResponse'
+import { DeviceID } from '../../devices/index.js'
+import APIResponse from '../base/APIResponse.js'
 
 interface APIDeviceRegistrationResponseData {
   deviceId: DeviceID
