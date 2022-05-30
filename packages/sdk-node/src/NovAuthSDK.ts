@@ -6,6 +6,7 @@ import {
   base64decode,
   base64decodestring,
   base64encode,
+  base64encodestring,
   compress,
   deserializePairingResponse,
   PairingResponse,
@@ -144,7 +145,7 @@ class NovAuthSDK {
         {
           ...deserialized.credential,
           response: {
-            clientDataJSON: JSON.stringify(clientDataJSON),
+            clientDataJSON: base64encodestring(JSON.stringify(clientDataJSON)),
             attestationObject:
               deserialized.credential.response.attestationObject,
           },
