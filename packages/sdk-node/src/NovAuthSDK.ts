@@ -4,6 +4,7 @@ import QRCode from 'qrcode'
 import PairingIntent from './pairing/PairingIntent.js'
 import {
   base64decode,
+  base64decodestring,
   base64encode,
   compress,
   deserializePairingResponse,
@@ -25,6 +26,7 @@ import {
   APIDeviceUpdateResponse,
   APIPushAuthenticationRequest,
 } from '@novauth/common'
+import base64url from 'base64url'
 
 interface NovAuthSDKOptions {
   app: {
@@ -134,7 +136,7 @@ class NovAuthSDK {
 
       // HACK: fix issue with non-compliant fido2-lib code for origin check
       const clientDataJSON = JSON.parse(
-        deserialized.credential.response.clientDataJSON
+        base64decodestring(deserialized.credential.response.clientDataJSON)
       )
       clientDataJSON.origin = this.options.app.origin
       // verify pairing

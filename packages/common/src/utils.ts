@@ -8,4 +8,12 @@ function base64decode(s: string): ArrayBuffer {
   return base64url.toBuffer(s).buffer
 }
 
-export { base64decode, base64encode }
+function base64decodestring(s: string): string {
+  return base64url.decode(s)
+}
+
+function base64encodestring(s: string): string {
+  return base64url.encode(s)
+}
+
+export { base64decode, base64encode, base64decodestring, base64encodestring }
