@@ -1,6 +1,6 @@
 {
   "name": "@novauth/common",
-  "version": "0.1.11",
+  "version": "0.1.13",
   "description": "Shared code for the NovAuth project",
   "type": "module",
   "keywords": [
