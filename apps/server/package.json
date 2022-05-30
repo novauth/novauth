@@ -2,7 +2,7 @@
   "name": "@novauth/server",
   "private": true,
   "type": "module",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "The backend server for NovAuth",
   "keywords": [
     "server",
@@ -37,7 +37,7 @@
     "url": "https://github.com/novauth/novauth/issues"
   },
   "dependencies": {
-    "@novauth/common": "^0.1.10",
+    "@novauth/common": "^0.1.11",
     "bcrypt": "^5.0.1",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
