@@ -2,7 +2,7 @@
   "name": "@novauth/server",
   "private": true,
   "type": "module",
-  "version": "0.1.0",
+  "version": "0.1.4",
   "description": "The backend server for NovAuth",
   "keywords": [
     "server",
