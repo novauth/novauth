@@ -140,6 +140,9 @@ class NovAuthSDK {
         base64decodestring(deserialized.credential.response.clientDataJSON)
       )
       clientDataJSON.origin = this.options.app.origin
+      // HACK: fix issue with non-compliant Android Fido2ApiClient not providing the challenge back in the response.
+      clientDataJSON.challenge = operation.data.challenge
+
       // verify pairing
       const regResult = await this.f2l.attestationResult(
         {
