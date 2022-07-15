@@ -7172,40 +7172,40 @@ expo-constants@~13.1.0, expo-constants@~13.1.1:
     "@expo/config" "^6.0.14"
     uuid "^3.3.2"
 
-expo-dev-client@~0.9.5:
-  version "0.9.5"
-  resolved "https://registry.yarnpkg.com/expo-dev-client/-/expo-dev-client-0.9.5.tgz#257f10f2475051624f43a4c86d832f21afe41fde"
-  integrity sha512-cmbNe4vl8W+yHfsmwrdf9PZD4xBjpN7g2UAWMn1PHRpby26X59MyGQvrtOfZHxShHdhYGwmhfjUdjP31qHxjZQ==
+expo-dev-client@~1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/expo-dev-client/-/expo-dev-client-1.0.1.tgz#88edb3a60b5a758c0cc57b0326bdcb1ad1573e5a"
+  integrity sha512-LMtMvappEyq0AvX3QXeq4CQ/dbdiBwUm6exjBz3dCM7KhMbjJ26TxbYvS0DfxAJDXBlyjCLi8O4HAUb0U811/Q==
   dependencies:
     "@expo/config-plugins" "^4.0.14"
-    expo-dev-launcher "0.11.5"
-    expo-dev-menu "0.10.6"
-    expo-dev-menu-interface "0.6.0"
+    expo-dev-launcher "1.0.1"
+    expo-dev-menu "1.0.1"
+    expo-dev-menu-interface "0.7.0"
     expo-manifests "~0.3.0"
     expo-updates-interface "~0.6.0"
 
-expo-dev-launcher@0.11.5:
-  version "0.11.5"
-  resolved "https://registry.yarnpkg.com/expo-dev-launcher/-/expo-dev-launcher-0.11.5.tgz#206e80327ed658cc76f8fa9e39848bfabf066621"
-  integrity sha512-+wNBIWxoWCffbPJSt1fT0XOhnsk6sJqTFNAqFgACK8mCHxnFgrndZX4N3IQI60OGALvz1DqKil1RbwbUW2xbNQ==
+expo-dev-launcher@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/expo-dev-launcher/-/expo-dev-launcher-1.0.1.tgz#cb550399a23d7e4fcc34cc7f5fef20cff979c7c8"
+  integrity sha512-1JFhiqjZE67qVAg0tOqVC53/7dIefWgaJ7OQRdapWEiiqUeFFnWmwvaz8NcjsTJzsk5bepXrgW7QpIZYkUYniQ==
   dependencies:
     "@expo/config-plugins" "^4.0.14"
-    expo-dev-menu "0.10.6"
+    expo-dev-menu "1.0.1"
     resolve-from "^5.0.0"
     semver "^7.3.5"
 
-expo-dev-menu-interface@0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/expo-dev-menu-interface/-/expo-dev-menu-interface-0.6.0.tgz#7721dc7e5bd3bbf3a570deb7c6464bc6fc5b5971"
-  integrity sha512-RRBDMhVVKR85zok1qUp5gUhIELwl1cnZXSRPsPT0qZBsk3pYz5ZlFqYewFfczPjnxXQsP8ISqqYjwwVCzr7Z+A==
+expo-dev-menu-interface@0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/expo-dev-menu-interface/-/expo-dev-menu-interface-0.7.0.tgz#e141a671c7a34b921e7255653665d5e8489dab08"
+  integrity sha512-f/9gWLpuvXvQPeVBHH0T7qm4v2/Ynygs7dzebxqSWGDcCabfqRhuX+dv/t7CGu85m6waC9xYYnjLG7l8LC/i3Q==
 
-expo-dev-menu@0.10.6:
-  version "0.10.6"
-  resolved "https://registry.yarnpkg.com/expo-dev-menu/-/expo-dev-menu-0.10.6.tgz#16220cff034a9759e9e2581ca54025df8c29e9e5"
-  integrity sha512-EUhqtzZe9r4dYkSpnS3J9BApiqUk/7Pw/jJxx3eHMRsMDDQ/M4TTWqJi5IVudTNdXCRxkQIH/S7Dl+uszMPeCw==
+expo-dev-menu@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/expo-dev-menu/-/expo-dev-menu-1.0.1.tgz#7d64953d5304c794d47bfd5f3861a47c7eef9d03"
+  integrity sha512-npDfYQorhI/EaJb2LRLxI9WqzyIrM3AXhHnaA6qNBtEMb5IwAmg4I7//2FqbCtama+sUkc8mEFqyUa4/DbhJ2Q==
   dependencies:
     "@expo/config-plugins" "^4.0.14"
-    expo-dev-menu-interface "0.6.0"
+    expo-dev-menu-interface "0.7.0"
     semver "^7.3.5"
 
 expo-device@~4.2.0:
