@@ -16,7 +16,7 @@
     "url": "https://epmatt.com"
   },
   "homepage": "https://github.com/novauth/novauth/tree/main/packages/sdk-node#readme",
-  "license": "GPL-3.0",
+  "license": "SEE LICENSE IN LICENSE.md",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [

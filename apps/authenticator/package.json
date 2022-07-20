@@ -10,7 +10,7 @@
   ],
   "author": "Matteo Agnoletto <30753195+EPMatt@users.noreply.github.com>",
   "homepage": "https://github.com/novauth/novauth/tree/main/packages/authenticator#readme",
-  "license": "GPL-3.0",
+  "license": "SEE LICENSE IN LICENSE.md",
   "main": "index.js",
   "repository": {
     "type": "git",
