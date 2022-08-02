@@ -3322,9 +3322,9 @@
     react-native-size-matters "^0.4.0"
 
 "@rneui/themed@^4.0.0-rc.3":
-  version "4.0.0-rc.3"
-  resolved "https://registry.yarnpkg.com/@rneui/themed/-/themed-4.0.0-rc.3.tgz#96e7d97231dd83d6b2563234b3a36a15a6491595"
-  integrity sha512-f+XQiYu0YODKzyZG2azhesr6o0/rdUDX2DCsKQ6amNsl9Xwwq0+N3UgCUmAFYnIUttbgQN9bh7eEiaY6Hna+4g==
+  version "4.0.0-rc.6"
+  resolved "https://registry.yarnpkg.com/@rneui/themed/-/themed-4.0.0-rc.6.tgz#1cc6e23dc1b24e0b60b90acc7a6240cd29a420c2"
+  integrity sha512-iyH+KqbP8wzmrWgnyVtB3uIELZn0kZ8MIvTQ5atxLowO+vqSYSwmuhR2/MQQmpIwnOTMAlGql7Asq2o74Rs6jQ==
 
 "@segment/loosely-validate-event@^2.0.0":
   version "2.0.0"
