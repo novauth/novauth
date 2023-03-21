@@ -40,7 +40,7 @@
     "expo": "~45.0.0",
     "expo-barcode-scanner": "^11.3.0",
     "expo-constants": "~13.1.1",
-    "expo-dev-client": "~0.9.5",
+    "expo-dev-client": "~2.1.6",
     "expo-device": "~4.2.0",
     "expo-notifications": "~0.15.2",
     "expo-secure-store": "~11.2.0",
